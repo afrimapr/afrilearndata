@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of afrilearndata is to ...
+afrilearndata provides small African datasets to help with learning and teaching of spatial techniques and mapping.
 
 ## Installation
 
