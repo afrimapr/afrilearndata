@@ -1,5 +1,5 @@
 Package: afrilearndata
-Title: What the Package Does (One Line, Title Case)
+Title: Small Africa Map Datasets for Learning.
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Andy",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "southandy@gmail.com",
            comment = c(ORCID = "0000-0003-4051-6135"))
-Description: What the package does (one paragraph).
+Description: Provides small African datasets to help with learning and teaching of spatial techniques and mapping. Part of afrimapr project.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
 Encoding: UTF-8
