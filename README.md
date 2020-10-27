@@ -20,8 +20,24 @@ Install the development version of afrilearndata with:
 
 ## First use
 
+The package contains the sf objects sfafricountries, sfafrihway and sfafricities.
+
+Lazy loading means that the objects should be accessible once `library(afrilearndata)` is used.
+
+If they are not recognised you can use e.g. `data(sfafricountries)` to make sure the objects are loaded.
+
 ``` r
 library(afrilearndata)
+library(sf)
+
+# polygons
+plot(sf::st_geometry(sfafricountries))
+
+# lines
+plot(sf::st_geometry(sfafrihway))
+
+# points
+
 
 ```
 
