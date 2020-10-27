@@ -20,7 +20,7 @@ Install the development version of afrilearndata with:
 
 ## First use
 
-The package contains the sf objects sfafricountries, sfafrihway and sfafricities.
+The package contains the sf objects sfafricountries, sfafrihway and sfafricapitals.
 
 Lazy loading means that the objects should be accessible once `library(afrilearndata)` is used.
 
@@ -37,7 +37,10 @@ plot(sf::st_geometry(sfafricountries))
 plot(sf::st_geometry(sfafrihway))
 
 # points
+plot(sf::st_geometry(sfafricapitals))
 
+library(mapview)
+mapview::mapview(sfafricapitals, zcol="name")
 
 ```
 
