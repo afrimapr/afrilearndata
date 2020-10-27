@@ -20,7 +20,7 @@ Install the development version of afrilearndata with:
 
 ## First use
 
-The package contains the sf objects sfafricountries, sfafrihway and sfafricapitals.
+The package contains the sf objects `sfafricountries`, `sfafrihway` and `sfafricapitals`.
 
 Lazy loading means that the objects should be accessible once `library(afrilearndata)` is used.
 
