@@ -6,8 +6,8 @@
 #'
 #' @format Formal class 'sf' [package "sf"];
 #' \itemize{
-#'     \item{name_long} {character vector of country names}
-#'     \item{geom} {sfc_MULTIPOLYGON}
+#'     \item{Name} {character vector of section names}
+#'     \item{geom} {sfc_LINESTRING}
 #' }
 #' The object is in geographical coordinates using the WGS84 datum.
 #'
@@ -23,6 +23,8 @@
 #'   data(sfafrihway)
 #'   # or
 #'   sfafrihway <- sf::read_sf("inst/extdata/Trans-African Highway Network.kml")
+#'   #remove Description column, only has contents in first row
+#'   sfafrihway <- sfafrihway[ , which(names(sfafrihway)!='Description')]
 #'
 #'   plot(sf::st_geometry(sfafrihway))
 #' }
