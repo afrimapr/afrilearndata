@@ -58,12 +58,19 @@ dfafricapitals <- dfafricapitals[ !is.na(dfafricapitals$iso3c), ]
 #[1] "South Sudan" "Somaliland"
 #TODO add capitals for "South Sudan" "Somaliland"
 
-#TODO rename column country.etc
+#remove capital column
+sfafricapitals <- sfafricapitals[ , which(names(sfafricapitals) != "capital") ]
+
+#rename column country.etc
+names(sfafricapitals)[2] <- "countryname"
 
 #convert to sf: 4326 is CRS code for most common lat lon WGS84
 sfafricapitals <- sf::st_as_sf(dfafricapitals, coords=c("long","lat"), crs=4326)
 
 usethis::use_data(sfafricapitals, overwrite = TRUE)
+
+#save to extdata for reading demos - as geopackage for example and copes with longer column names
+sf::write_sf(sfafricapitals,"inst/extdata/africapitals.gpkg")
 
 #mapview::mapview(sfafricapitals, zcol="name")
 
