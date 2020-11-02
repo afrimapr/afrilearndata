@@ -2,7 +2,7 @@
 #' @aliases sflines
 #' @title African trans-continental highway network lines
 #'
-#' @description The object loaded is a \code{sf} object containing simplified lines of planned transcontinental highway
+#' @description a \code{sf} object of simplified lines of transcontinental highway network
 #'
 #' @format Formal class 'sf' [package "sf"];
 #' \itemize{
