@@ -23,8 +23,10 @@
 #'   library(sf)
 #'   data(sfafricapitals)
 #'   # or
-#'   sfafricapitals <- sf::read_sf("inst/extdata/africapitals.gpkg")
+#'   sfafricapitals <- sf::read_sf("extdata//africapitals.gpkg")
+#'   #safe paths but I don't want to make complicated
+#'   #r"(extdata/africapitals.gpkg)"
 #'
-#'   plot(sf::st_geometry(sfafricapitals))
+#'   #plot(sf::st_geometry(sfafricapitals))
 #' }
 "sfafricapitals"

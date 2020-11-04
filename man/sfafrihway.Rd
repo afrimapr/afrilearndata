@@ -8,8 +8,8 @@
 \format{
 Formal class 'sf' \link{package "sf"};
 \itemize{
-\item{name_long} {character vector of country names}
-\item{geom} {sfc_MULTIPOLYGON}
+\item{Name} {character vector of section names}
+\item{geom} {sfc_LINESTRING}
 }
 The object is in geographical coordinates using the WGS84 datum.
 }
@@ -20,14 +20,16 @@ The object is in geographical coordinates using the WGS84 datum.
 sfafrihway
 }
 \description{
-The object loaded is a \code{sf} object containing simplified lines of planned transcontinental highway
+a \code{sf} object of simplified lines of transcontinental highway network
 }
 \examples{
 if (requireNamespace("sf", quietly = TRUE)) {
   library(sf)
   data(sfafrihway)
   # or
-  sfafrihway <- sf::read_sf("inst/extdata/Trans-African Highway Network.kml")
+  sfafrihway <- sf::read_sf("extdata//Trans-African Highway Network.kml")
+  #remove Description column, only has contents in first row
+  sfafrihway <- sfafrihway[ , which(names(sfafrihway)!='Description')]
 
   plot(sf::st_geometry(sfafrihway))
 }

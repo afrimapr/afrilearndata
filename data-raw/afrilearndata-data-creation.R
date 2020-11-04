@@ -31,6 +31,37 @@ sf::write_sf(sfafricountries,"inst/extdata/africountries.shp")
 #TODO check this
 #GDAL Message 1: Value 149229090 of field pop_est of feature 33 not successfully written. Possibly due to too larger number with respect to field width
 
+# potential 2nd polygon dataset of hexagonal equal area cartogram for African countries
+
+#install.packages("geogrid")
+
+library(geogrid)
+
+new_cells <- calculate_grid(shape = sfafricountries, grid_type = "hexagonal", seed=4)
+sfafrihex <- assign_polygons(sfafricountries, new_cells)
+
+mapview::mapview(sfafrihex, label='name')
+# Warning message: sf layer has inconsistent datum (+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs).
+# Need '+proj=longlat +datum=WGS84'
+
+# but don't want 2 cells in madagascar
+# can modify random seed
+# for (i in 1:6) {
+#   new_cells <- calculate_grid(shape = sfafricountries, grid_type = 'hexagonal', seed = i)
+#   plot(new_cells, main = paste('Seed', i, sep=' '))
+# }
+
+#seeds 5,4,3,1 just have one cell for madagascar
+#seed1 has lesotho below s.africa
+#seed3 good:s.africa & lesotho in bottom row, bad: Eq. Guinea below Gabon
+#seed4 best so far
+
+#TODO how to add labels permanently to map ? either mapview or sf plot ?
+#add library(afrilearndata) to tweet
+
+
+
+
 # POINTS
 # needs to go after polygons because uses country names from that
 

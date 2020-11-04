@@ -28,7 +28,7 @@
 #'   library(sf)
 #'   data(sfafricountries)
 #'   # or
-#'   sfafricountries <- sf::read_sf("inst/extdata/africountries.shp")
+#'   sfafricountries <- sf::read_sf("extdata//africountries.shp")
 #'
 #'   plot(sf::st_geometry(sfafricountries))
 #' }
