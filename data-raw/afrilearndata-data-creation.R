@@ -37,14 +37,14 @@ sf::write_sf(sfafricountries,"inst/extdata/africountries.shp")
 
 library(geogrid)
 
-new_cells <- calculate_grid(shape = sfafricountries, grid_type = "hexagonal", seed=4)
+new_cells <- geogrid::calculate_grid(shape = sfafricountries, grid_type = "hexagonal", seed=4)
 sfafrihex <- assign_polygons(sfafricountries, new_cells)
 
 mapview::mapview(sfafrihex, label='name')
 # Warning message: sf layer has inconsistent datum (+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs).
 # Need '+proj=longlat +datum=WGS84'
 
-# but don't want 2 cells in madagascar
+# don't want 2 cells in madagascar
 # can modify random seed
 # for (i in 1:6) {
 #   new_cells <- calculate_grid(shape = sfafricountries, grid_type = 'hexagonal', seed = i)
@@ -56,9 +56,20 @@ mapview::mapview(sfafrihex, label='name')
 #seed3 good:s.africa & lesotho in bottom row, bad: Eq. Guinea below Gabon
 #seed4 best so far
 
-#TODO how to add labels permanently to map ? either mapview or sf plot ?
-#add library(afrilearndata) to tweet
+#to add labels permanently to map
+library(tmap)
+tmap_mode("view")
+tmap::tm_shape(sfafrihex) +
+       tm_borders("red") +
+       tm_text("name", col='blue')
 
+#potential other tilemaps but gives error I think due to madagascar
+#install.packages("tilemaps")
+library(tilemaps)
+sfafritilemap <- generate_map(sfafricountries, square = FALSE, flat_topped = TRUE)
+# although coordinates are longitude/latitude, st_touches assumes that they are planar
+# Error in generate_map(sfafricountries, square = FALSE, flat_topped = TRUE) :
+#   regions are not contiguous
 
 
 
