@@ -6,7 +6,7 @@
 \alias{sfpoints}
 \title{African capital city points}
 \format{
-Formal class 'sf' \link{package "sf"};
+Formal class 'sf'; 49 rows 5 columns
 \itemize{
 \item{name} {character vector capital city names}
 \item{countryname} {character vector country names}
@@ -14,7 +14,8 @@ Formal class 'sf' \link{package "sf"};
 \item{iso3c} {character vector ISO 3 letter country code}
 \item{geometry} {sfc_POINT}
 }
-The object is in geographical coordinates using the WGS84 datum.
+
+Geographical coordinates WGS84 datum (CRS EPSG 4326)
 }
 \source{
 \url{https://cran.r-project.org/web/packages/maps/}
@@ -30,7 +31,7 @@ if (requireNamespace("sf", quietly = TRUE)) {
   library(sf)
   data(sfafricapitals)
   # or
-  sfafricapitals <- sf::read_sf("extdata//africapitals.gpkg")
+  sfafricapitals <- sf::read_sf(system.file("extdata/africapitals.gpkg", package="afrilearndata"))
   #safe paths but I don't want to make complicated
   #r"(extdata/africapitals.gpkg)"
 

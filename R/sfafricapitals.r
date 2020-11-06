@@ -4,7 +4,7 @@
 #'
 #' @description a \code{sf} object points of African capital cities
 #'
-#' @format Formal class 'sf' [package "sf"];
+#' @format Formal class 'sf'; 49 rows 5 columns
 #' \itemize{
 #'     \item{name} {character vector capital city names}
 #'     \item{countryname} {character vector country names}
@@ -12,7 +12,8 @@
 #'     \item{iso3c} {character vector ISO 3 letter country code}
 #'     \item{geometry} {sfc_POINT}
 #' }
-#' The object is in geographical coordinates using the WGS84 datum.
+#'
+#' Geographical coordinates WGS84 datum (CRS EPSG 4326)
 #'
 #'
 #' @source \url{https://cran.r-project.org/web/packages/maps/}

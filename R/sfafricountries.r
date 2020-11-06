@@ -4,7 +4,7 @@
 #'
 #' @description a \code{sf} object containing low resolution African country boundaries
 #'
-#' @format Formal class 'sf' [package "sf"];
+#' @format Formal class 'sf'; 51 rows, 8 columns
 #' \itemize{
 #'     \item{name} {character vector country names}
 #'     \item{name_long} {character vector country names long}
@@ -15,7 +15,8 @@
 #'     \item{iso_a3} {character vector ISO 3 letter country code}
 #'     \item{geometry} {sfc_MULTIPOLYGON}
 #' }
-#' The object is in geographical coordinates using the WGS84 datum.
+#'
+#' Geographical coordinates WGS84 datum (CRS EPSG 4326)
 #'
 #' @seealso
 #' https://cran.r-project.org/web/packages/rnaturalearth/
@@ -28,7 +29,7 @@
 #'   library(sf)
 #'   data(sfafricountries)
 #'   # or
-#'   sfafricountries <- sf::read_sf(system.file("extdata/africountries.gpkg", package="afrilearndata"))
+#'   sfafricountries <- sf::read_sf(system.file("extdata/africountries.shp", package="afrilearndata"))
 #'
 #'   plot(sf::st_geometry(sfafricountries))
 #' }

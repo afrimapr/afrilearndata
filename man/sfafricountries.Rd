@@ -6,7 +6,7 @@
 \alias{sfpolygons}
 \title{African country boundaries}
 \format{
-Formal class 'sf' \link{package "sf"};
+Formal class 'sf'; 51 rows, 8 columns
 \itemize{
 \item{name} {character vector country names}
 \item{name_long} {character vector country names long}
@@ -17,7 +17,8 @@ Formal class 'sf' \link{package "sf"};
 \item{iso_a3} {character vector ISO 3 letter country code}
 \item{geometry} {sfc_MULTIPOLYGON}
 }
-The object is in geographical coordinates using the WGS84 datum.
+
+Geographical coordinates WGS84 datum (CRS EPSG 4326)
 }
 \source{
 \url{https://www.naturalearthdata.com/downloads/110m-cultural-vectors/}
@@ -33,7 +34,7 @@ if (requireNamespace("sf", quietly = TRUE)) {
   library(sf)
   data(sfafricountries)
   # or
-  sfafricountries <- sf::read_sf("extdata//africountries.shp")
+  sfafricountries <- sf::read_sf(system.file("extdata/africountries.shp", package="afrilearndata"))
 
   plot(sf::st_geometry(sfafricountries))
 }

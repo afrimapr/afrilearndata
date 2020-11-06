@@ -4,12 +4,13 @@
 #'
 #' @description a \code{sf} object of simplified lines of transcontinental highway network
 #'
-#' @format Formal class 'sf' [package "sf"];
+#' @format Formal class 'sf'; 100 rows, 2 columns
 #' \itemize{
 #'     \item{Name} {character vector of section names}
 #'     \item{geom} {sfc_LINESTRING}
 #' }
-#' The object is in geographical coordinates using the WGS84 datum.
+#'
+#' Geographical coordinates WGS84 datum (CRS EPSG 4326)
 #'
 #' @seealso
 #' https://en.wikipedia.org/wiki/Trans-African_Highway_network
@@ -22,7 +23,8 @@
 #'   library(sf)
 #'   data(sfafrihway)
 #'   # or
-#'   sfafrihway <- sf::read_sf(system.file("extdata/Trans-African Highway Network.kml", package="afrilearndata"))
+#'   filename <- system.file("extdata/trans-african-highway.kml", package="afrilearndata")
+#'   sfafrihway <- sf::read_sf(filename)
 #'   #remove Description column, only has contents in first row
 #'   sfafrihway <- sfafrihway[ , which(names(sfafrihway)!='Description')]
 #'

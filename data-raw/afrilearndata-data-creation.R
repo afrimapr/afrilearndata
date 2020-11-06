@@ -3,7 +3,10 @@
 
 
 # LINES
-sfafrihway <- sf::read_sf("inst/extdata/Trans-African Highway Network.kml")
+
+
+filename <- r"(inst/extdata/trans-african-highway.kml)" #windows safe paths
+sfafrihway <- sf::read_sf(filename)
 
 #remove Description column, only has contents in first row
 sfafrihway <- sfafrihway[ , which(names(sfafrihway)!='Description')]
@@ -27,7 +30,8 @@ sfafricountries <- sfafricountries[ , which(names(sfafricountries) %in% columns_
 usethis::use_data(sfafricountries, overwrite = TRUE)
 
 #save to extdata for reading demos
-sf::write_sf(sfafricountries,"inst/extdata/africountries.shp")
+filename <- r"(inst/extdata/africountries.shp)" #windows safe paths
+sf::write_sf(sfafricountries, filename)
 #TODO check this
 #GDAL Message 1: Value 149229090 of field pop_est of feature 33 not successfully written. Possibly due to too larger number with respect to field width
 
@@ -112,7 +116,8 @@ sfafricapitals <- sf::st_as_sf(dfafricapitals, coords=c("long","lat"), crs=4326)
 usethis::use_data(sfafricapitals, overwrite = TRUE)
 
 #save to extdata for reading demos - as geopackage for example and copes with longer column names
-sf::write_sf(sfafricapitals,"inst/extdata/africapitals.gpkg")
+filename <- r"(inst/extdata/africapitals.gpkg)" #windows safe paths
+sf::write_sf(sfafricapitals, filename)
 
 #mapview::mapview(sfafricapitals, zcol="name")
 
