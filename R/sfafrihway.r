@@ -22,7 +22,7 @@
 #'   library(sf)
 #'   data(sfafrihway)
 #'   # or
-#'   sfafrihway <- sf::read_sf("extdata//Trans-African Highway Network.kml")
+#'   sfafrihway <- sf::read_sf(system.file("extdata/Trans-African Highway Network.kml", package="afrilearndata"))
 #'   #remove Description column, only has contents in first row
 #'   sfafrihway <- sfafrihway[ , which(names(sfafrihway)!='Description')]
 #'

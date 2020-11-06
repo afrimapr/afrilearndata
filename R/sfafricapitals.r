@@ -23,7 +23,7 @@
 #'   library(sf)
 #'   data(sfafricapitals)
 #'   # or
-#'   sfafricapitals <- sf::read_sf("extdata//africapitals.gpkg")
+#'   sfafricapitals <- sf::read_sf(system.file("extdata/africapitals.gpkg", package="afrilearndata"))
 #'   #safe paths but I don't want to make complicated
 #'   #r"(extdata/africapitals.gpkg)"
 #'
