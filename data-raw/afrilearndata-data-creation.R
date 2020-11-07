@@ -122,6 +122,23 @@ sf::write_sf(sfafricapitals, filename)
 #mapview::mapview(sfafricapitals, zcol="name")
 
 # RASTER
-# todo find a small raster datset
+# TODO find a small raster datset
+#KoeppenGeiger 2017 half degree from kmz
+
+filekmz <- r"(C:\Dropbox\_afrimapr\data\koeppen-geiger\Global_1986-2010_KG_30m.kmz)" #windows safe paths
+
+#filename <- r"(C:\Dropbox\_afrimapr\data\koeppen-geiger\Koeppen-Geiger-ASCII.txt)" #windows safe paths
+#filename <- r"(inst/extdata/Koeppen-Geiger-ASCII.txt)" #windows safe paths
+
+library(raster)
+
+rastkg <- raster(filekmz)
+
+#TODO cookie cut to the African continent
+#https://gis.stackexchange.com/questions/92221/extract-raster-from-raster-using-polygon-shapefile-in-r
+cr <- crop(rastkg, extent(sfafricountries), snap="out")
+fr <- rasterize(sfafricountries, cr)
+lr <- mask(x=cr, mask=fr)
+plot(lr)
 
 #usethis::use_data(DATASET, overwrite = TRUE)
