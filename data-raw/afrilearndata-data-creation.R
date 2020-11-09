@@ -27,6 +27,9 @@ columns_to_include <- c('name','name_long','iso_a3','pop_est','gdp_md_est','inco
 
 sfafricountries <- sfafricountries[ , which(names(sfafricountries) %in% columns_to_include) ]
 
+#maybe making sure CRS is correct
+sfafricountries <- sf::st_set_crs(sfafricountries,4326)
+
 usethis::use_data(sfafricountries, overwrite = TRUE)
 
 #save to extdata for reading demos
@@ -134,11 +137,103 @@ library(raster)
 
 rastkg <- raster(filekmz)
 
-#TODO cookie cut to the African continent
+#cookie cut to the African continent
 #https://gis.stackexchange.com/questions/92221/extract-raster-from-raster-using-polygon-shapefile-in-r
 cr <- crop(rastkg, extent(sfafricountries), snap="out")
 fr <- rasterize(sfafricountries, cr)
-lr <- mask(x=cr, mask=fr)
-plot(lr)
+rastafrikg <- mask(x=cr, mask=fr)
+plot(rastafrikg)
+
+dim(rastafrikg)
+#[1] 434 413   1
+extent(rastafrikg)
+# xmin       : -17.66667
+# xmax       : 51.16667
+# ymin       : -34.83333
+# ymax       : 37.5
+crs(rastafrikg)
+#CRS arguments: +proj=longlat +datum=WGS84 +no_defs
+
+#doesn't really show raster attribute table
+ratify(rastafrikg)
+
+#seems that may just have integer values 1-255 from the kmz
+#there is an alternate way to read in from grd & gri files, but think these may be the higher res version
+
+# ? mapview misses off west of continent
+mapview::mapview(rastafrikg)
+
+
+# maybe try generalising some worldpop data from package wopr instead
+# https://github.com/wpgp/wopr
+
+devtools::install_github('wpgp/wopr')
+library(wopr)
+#but that seems to be all individual countries
+
+#or download 2020 global 30m (1km) data from here
+#https://www.worldpop.org/geodata/summary?id=24777
+#Estimated total number of people per grid-cell.
+#The dataset is available to download in Geotiff format at a resolution of 30 arc (approximately 1km at the equator).
+
+filewpop <- r"(C:\Dropbox\_afrimapr\data\worldpop\ppp_2020_1km_Aggregated.tif)" #windows safe paths
+
+library(raster)
+
+rastwpop <- raster(filewpop)
+
+plot(rastwpop)
+#too many pixels for mapview
+#mapview(rastwpop)
+
+#cookie cut to the African continent
+#https://gis.stackexchange.com/questions/92221/extract-raster-from-raster-using-polygon-shapefile-in-r
+
+sfworldland <- rnaturalearth::ne_download(scale='small',category='physical',type='land', returnclass = 'sf')
+sfworldlandmed <- rnaturalearth::ne_download(scale='medium',category='physical',type='land', returnclass = 'sf')
+
+#OR to get continent map I should just be able to aggregate sfafricountries
+#see geocomputation
+#BUT getting internal lines current issue
+sfafricontinent = sfafricountries %>%
+     group_by(continent) %>%
+     summarize()
+#example in geocomputation does work
+#world_agg3 = world %>%
+sfafricont = world %>%
+       group_by(continent) %>%
+       filter(continent=='Africa')  %>%
+       summarize()
+
+
+#can I cut world coast by sfafricountries
+
+
+cr <- crop(rastwpop, extent(sfafricountries), snap="out")
+#dim(cr) 8662 8252    1
+#fr <- rasterize(sfafricountries, cr, silent=FALSE) #rasterise took >5 mins on 8k*8k grid
+fr <- rasterize(sfafricont, cr, silent=FALSE) #rasterise took >5 mins on 8k*8k grid
+rastafriwpop <- mask(x=cr, mask=fr)
+plot(rastafriwpop)
+
+#still 8k * 8k cells
+
+#now want to aggregate(fact=[num cells in each direction])
+
+rastafriwpop_agg10 <- raster::aggregate(rastafriwpop, fun=mean, fact=10)
+#still 800 * 800 cells that mapview doesn't like to display
+
+rastafriwpop_agg20 <- raster::aggregate(rastafriwpop, fun=mean, fact=20)
+rastafriwpop_agg50 <- raster::aggregate(rastafriwpop, fun=mean, fact=50)
+rastafriwpop_agg100 <- raster::aggregate(rastafriwpop, fun=mean, fact=100)
+
+dim(rastafriwpop_agg20) #434 413   1
+dim(rastafriwpop_agg50) #174 166   1
+
+mapview(rastafriwpop_agg20) #BEST? > mapview happy
+mapview(rastafriwpop_agg50) #highest density cell in lagos in sea
+mapview(rastafriwpop_agg100)
+
+#TODO why does 20km version cut off parts of W of continent ?
 
 #usethis::use_data(DATASET, overwrite = TRUE)
