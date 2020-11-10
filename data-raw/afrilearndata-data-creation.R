@@ -189,15 +189,27 @@ plot(rastwpop)
 #cookie cut to the African continent
 #https://gis.stackexchange.com/questions/92221/extract-raster-from-raster-using-polygon-shapefile-in-r
 
-sfworldland <- rnaturalearth::ne_download(scale='small',category='physical',type='land', returnclass = 'sf')
-sfworldlandmed <- rnaturalearth::ne_download(scale='medium',category='physical',type='land', returnclass = 'sf')
+#sfworldland <- rnaturalearth::ne_download(scale='small',category='physical',type='land', returnclass = 'sf')
+#sfworldlandmed <- rnaturalearth::ne_download(scale='medium',category='physical',type='land', returnclass = 'sf')
 
 #OR to get continent map I should just be able to aggregate sfafricountries
 #see geocomputation
 #BUT getting internal lines current issue
+sfafricountries$continent <- "Africa"
 sfafricontinent = sfafricountries %>%
      group_by(continent) %>%
      summarize()
+
+plot(sf::st_geometry(sfafricontinent))
+
+#twitter example & set_precision fix
+sfcountries<- rnaturalearth::ne_countries(continent='Africa', returnclass='sf')
+sfafricontinent<- sfcountries %>%
+        group_by(continent) %>%
+        st_set_precision(10) %>% # edzers suggestion was 10000
+        summarize()
+plot(sf::st_geometry(sfafricontinent))
+
 #example in geocomputation does work
 #world_agg3 = world %>%
 sfafricont = world %>%
@@ -205,6 +217,7 @@ sfafricont = world %>%
        filter(continent=='Africa')  %>%
        summarize()
 
+#could problem be something due to the out of date CRS from rnaturalearth ?
 
 #can I cut world coast by sfafricountries
 
@@ -212,9 +225,11 @@ sfafricont = world %>%
 cr <- crop(rastwpop, extent(sfafricountries), snap="out")
 #dim(cr) 8662 8252    1
 #fr <- rasterize(sfafricountries, cr, silent=FALSE) #rasterise took >5 mins on 8k*8k grid
-fr <- rasterize(sfafricont, cr, silent=FALSE) #rasterise took >5 mins on 8k*8k grid
+fr <- rasterize(sfcontinent, cr, silent=FALSE) #rasterise takes >5 mins on 8k*8k grid
 rastafriwpop <- mask(x=cr, mask=fr)
 plot(rastafriwpop)
+#backup
+rastafriwpopfullres <- rastafriwpop
 
 #still 8k * 8k cells
 
@@ -236,4 +251,5 @@ mapview(rastafriwpop_agg100)
 
 #TODO why does 20km version cut off parts of W of continent ?
 
-#usethis::use_data(DATASET, overwrite = TRUE)
+rastafriwpop <- rastafriwpop_agg20
+usethis::use_data(rastafriwpop, overwrite = TRUE)
