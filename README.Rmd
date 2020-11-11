@@ -1,0 +1,94 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- used devtools::build_readme() to update the md -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# afrilearndata
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+afrilearndata provides small African datasets to help with learning and teaching of spatial techniques and mapping.
+
+## Installation
+
+Install the development version of afrilearndata with:
+
+``` r
+
+    # install.packages("remotes") # if not already installed
+    
+    remotes::install_github("afrimapr/afrilearndata")
+    
+```
+
+## First use
+
+The package contains the following objects 
+
+1. `sfafricountries`    polygons, country boundaries
+1. `sfafricontinent`    polygons, continent outline including madagascar
+1. `sfafrihway`         lines, trans african highway network
+1. `sfafricapitals`     points, capital cities
+1. `rastafriwpop`       raster grid, modelled population density per square km aggregated to 20km squares
+
+Lazy loading means that the objects should be accessible once `library(afrilearndata)` is used.
+
+If they are not recognised you can use e.g. `data(sfafricountries)` to make sure the objects are loaded.
+
+```{r countries}
+
+library(afrilearndata)
+library(sf)
+
+# polygons
+plot(sf::st_geometry(sfafricountries))
+
+# lines
+plot(sf::st_geometry(sfafrihway))
+
+# points
+plot(sf::st_geometry(sfafricapitals))
+
+```
+
+```{r highway}
+
+# lines
+plot(sf::st_geometry(sfafrihway))
+
+```
+
+```{r capitals}
+
+# points
+plot(sf::st_geometry(sfafricapitals))
+
+```
+
+
+```{r population grid}
+
+# raster grid
+library(raster)
+plot(rastafriwpop)
+
+```
+
+
+library(mapview)
+mapview::mapview(sfafricapitals, zcol="name")
+
+
+

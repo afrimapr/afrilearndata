@@ -192,7 +192,6 @@ plot(rastwpop)
 #sfworldland <- rnaturalearth::ne_download(scale='small',category='physical',type='land', returnclass = 'sf')
 #sfworldlandmed <- rnaturalearth::ne_download(scale='medium',category='physical',type='land', returnclass = 'sf')
 
-#OR to get continent map I should just be able to aggregate sfafricountries
 #see geocomputation
 #BUT getting internal lines current issue
 sfafricountries$continent <- "Africa"
@@ -209,6 +208,10 @@ sfafricontinent<- sfcountries %>%
         st_set_precision(10) %>% # edzers suggestion was 10000
         summarize()
 plot(sf::st_geometry(sfafricontinent))
+
+#TODO may want to add some missing islands to the continent e.g. cape verde, comoros
+
+usethis::use_data(sfafricontinent, overwrite = TRUE)
 
 #example in geocomputation does work
 #world_agg3 = world %>%
