@@ -1,5 +1,6 @@
 ---
 output: github_document
+always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -55,12 +56,6 @@ library(sf)
 # polygons
 plot(sf::st_geometry(sfafricountries))
 
-# lines
-plot(sf::st_geometry(sfafrihway))
-
-# points
-plot(sf::st_geometry(sfafricapitals))
-
 ```
 
 ```{r highway}
@@ -81,14 +76,25 @@ plot(sf::st_geometry(sfafricapitals))
 ```{r population grid}
 
 # raster grid
+# install.packages("raster") # if not already installed
 library(raster)
 plot(rastafriwpop)
 
 ```
 
+Interactive maps can be created using the `mapview` package.
 
-library(mapview)
-mapview::mapview(sfafricapitals, zcol="name")
+```{r interactive}
 
+# install.packages("mapview") # if not already installed
+#if (FALSE) {
+  
+  library(mapview)
+  mapview::mapview(sfafricountries, zcol="name")  
+  
+#}
+
+
+```
 
 
