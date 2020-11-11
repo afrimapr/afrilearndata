@@ -33,7 +33,7 @@ Install the development version of afrilearndata with:
     
 ```
 
-## First use
+## Outline
 
 The package contains the following objects 
 
@@ -46,6 +46,32 @@ The package contains the following objects
 Lazy loading means that the objects should be accessible once `library(afrilearndata)` is used.
 
 If they are not recognised you can use e.g. `data(sfafricountries)` to make sure the objects are loaded.
+
+
+Firstly, here are all the data shown together using the package `tmap`
+
+```{r tmap-all-the-data}
+
+library(afrilearndata)
+
+# install.packages("tmap") # if not already installed
+library(tmap)
+
+
+tm_shape(rastafriwpop) +
+    tm_raster("ppp_2020_1km_Aggregated", palette = terrain.colors(10), style="log10_pretty") +
+tm_shape(sfafricountries) +
+    tm_borders("white", lwd = .5) +
+    #tm_text("iso_a3", size = "AREA") +
+tm_shape(sfafrihway) +
+    tm_lines(col = "red") + 
+tm_shape(sfafricapitals) +
+    tm_symbols(col = "blue", shape=1, scale = .7 ) + #shape=1 for open circle
+tm_legend(show = FALSE)
+
+```
+
+Now looking at the data layers individually plotted with packages `sf`` or `raster`
 
 ```{r countries}
 

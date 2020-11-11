@@ -24,7 +24,7 @@ Install the development version of afrilearndata with:
     
 ```
 
-## First use
+## Outline
 
 The package contains the following objects
 
@@ -41,12 +41,39 @@ Lazy loading means that the objects should be accessible once
 If they are not recognised you can use e.g. `data(sfafricountries)` to
 make sure the objects are loaded.
 
+Firstly, here are all the data shown together using the package `tmap`
+
+``` r
+
+library(afrilearndata)
+
+# install.packages("tmap") # if not already installed
+library(tmap)
+
+
+tm_shape(rastafriwpop) +
+    tm_raster("ppp_2020_1km_Aggregated", palette = terrain.colors(10), style="log10_pretty") +
+tm_shape(sfafricountries) +
+    tm_borders("white", lwd = .5) +
+    #tm_text("iso_a3", size = "AREA") +
+tm_shape(sfafrihway) +
+    tm_lines(col = "red") + 
+tm_shape(sfafricapitals) +
+    tm_symbols(col = "blue", shape=1, scale = .7 ) + #shape=1 for open circle
+tm_legend(show = FALSE)
+#> Warning: package 'sf' was built under R version 4.0.3
+#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+```
+
+<img src="man/figures/README-tmap-all-the-data-1.png" width="100%" />
+
+Now looking at the data layers individually plotted with packages `sf``
+or`raster\`
+
 ``` r
 
 library(afrilearndata)
 library(sf)
-#> Warning: package 'sf' was built under R version 4.0.3
-#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
 
 # polygons
 plot(sf::st_geometry(sfafricountries))
