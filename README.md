@@ -50,9 +50,11 @@ library(afrilearndata)
 # install.packages("tmap") # if not already installed
 library(tmap)
 
+# tmap_mode("view") to set to tmap interactive viewing mode
+# TODO check why capitals symbols are filled in interactive mode
 
 tm_shape(rastafriwpop) +
-    tm_raster("ppp_2020_1km_Aggregated", palette = terrain.colors(10), style="log10_pretty") +
+    tm_raster("ppp_2020_1km_Aggregated", palette = terrain.colors(10), style="fisher") + #style="log10_pretty") +
 tm_shape(sfafricountries) +
     tm_borders("white", lwd = .5) +
     #tm_text("iso_a3", size = "AREA") +
