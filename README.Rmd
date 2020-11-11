@@ -1,6 +1,5 @@
 ---
 output: github_document
-always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -87,12 +86,12 @@ Interactive maps can be created using the `mapview` package.
 ```{r interactive}
 
 # install.packages("mapview") # if not already installed
-#if (FALSE) {
+if (FALSE) {
   
   library(mapview)
   mapview::mapview(sfafricountries, zcol="name")  
   
-#}
+}
 
 
 ```
