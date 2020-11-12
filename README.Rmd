@@ -25,12 +25,14 @@ afrilearndata provides small African datasets to help with learning and teaching
 
 Install the development version of afrilearndata with:
 
-``` r
+```{r setup, warnings=FALSE}
 
     # install.packages("remotes") # if not already installed
     
     remotes::install_github("afrimapr/afrilearndata")
     
+    library(afrilearndata)
+
 ```
 
 ## Outline
@@ -48,9 +50,11 @@ Lazy loading means that the objects should be accessible once `library(afrilearn
 If they are not recognised you can use e.g. `data(sfafricountries)` to make sure the objects are loaded.
 
 
-Firstly, here are all the data shown together using the package `tmap`
+Firstly, here are all the data shown together. The `tmap` code to create this plot is shown later in the readme. 
 
-```{r tmap-all-the-data}
+```{r tmap-all-the-data, warnings=FALSE, echo=FALSE}
+#echo=FALSE to not show code in first version at top of readme
+#do show the code later
 
 library(afrilearndata)
 
@@ -58,24 +62,24 @@ library(afrilearndata)
 library(tmap)
 
 # tmap_mode("view") to set to tmap interactive viewing mode
-# TODO check why capitals symbols are filled in interactive mode
 
 tm_shape(rastafriwpop) +
-    tm_raster("ppp_2020_1km_Aggregated", palette = terrain.colors(10), style="fisher") + #style="log10_pretty") +
+    tm_raster("ppp_2020_1km_Aggregated", palette = rev(viridisLite::magma(5)), breaks=c(0,2,20,200,2000,25000)) +
+    #tm_raster("ppp_2020_1km_Aggregated", palette = get_brewer_pal("BuPu", n = 7), style="fisher") + 
 tm_shape(sfafricountries) +
     tm_borders("white", lwd = .5) +
     #tm_text("iso_a3", size = "AREA") +
 tm_shape(sfafrihway) +
-    tm_lines(col = "red") + 
+    tm_lines(col = "blue") + 
 tm_shape(sfafricapitals) +
-    tm_symbols(col = "blue", shape=1, scale = .7 ) + #shape=1 for open circle
+    tm_symbols(col = "black", shape=1, alpha=0.4, scale = .6 ) + #shape=1 for open circle but not in view mode
 tm_legend(show = FALSE)
 
 ```
 
-Now looking at the data layers individually plotted with packages `sf`` or `raster`
+Now looking at the data layers individually plotted with packages `sf` or `raster`
 
-```{r countries}
+```{r countries, warnings=FALSE}
 
 library(afrilearndata)
 library(sf)
@@ -85,14 +89,14 @@ plot(sf::st_geometry(sfafricountries))
 
 ```
 
-```{r highway}
+```{r highway, warnings=FALSE}
 
 # lines
 plot(sf::st_geometry(sfafrihway))
 
 ```
 
-```{r capitals}
+```{r capitals, warnings=FALSE}
 
 # points
 plot(sf::st_geometry(sfafricapitals))
@@ -100,7 +104,7 @@ plot(sf::st_geometry(sfafricapitals))
 ```
 
 
-```{r population grid}
+```{r population grid, warnings=FALSE}
 
 # raster grid
 # install.packages("raster") # if not already installed
@@ -120,8 +124,33 @@ if (FALSE) {
   mapview::mapview(sfafricountries, zcol="name")  
   
 }
+```
 
+Now here is a repeat of the map shown at the start of the readme, together with the code used to create it.
+
+```{r tmap-code, warnings=FALSE, eval=TRUE, echo=TRUE}
+
+library(afrilearndata)
+
+# install.packages("tmap") # if not already installed
+library(tmap)
+
+# tmap_mode("view") to set to tmap interactive viewing mode
+
+tm_shape(rastafriwpop) +
+    tm_raster("ppp_2020_1km_Aggregated", palette = rev(viridisLite::magma(5)), breaks=c(0,2,20,200,2000,25000)) +
+    #tm_raster("ppp_2020_1km_Aggregated", palette = get_brewer_pal("BuPu", n = 7), style="fisher") + 
+tm_shape(sfafricountries) +
+    tm_borders("white", lwd = .5) +
+    #tm_text("iso_a3", size = "AREA") +
+tm_shape(sfafrihway) +
+    tm_lines(col = "blue") + 
+tm_shape(sfafricapitals) +
+    tm_symbols(col = "black", shape=1, alpha=0.4, scale = .6 ) + #shape=1 for open circle but not in view mode
+tm_legend(show = FALSE)
 
 ```
+
+
 
 
