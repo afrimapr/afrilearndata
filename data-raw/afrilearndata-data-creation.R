@@ -213,6 +213,11 @@ plot(sf::st_geometry(sfafricontinent))
 
 usethis::use_data(sfafricontinent, overwrite = TRUE)
 
+#save to extdata for reading demos
+filename <- r"(inst/extdata/africontinent.shp)" #windows safe paths
+sf::write_sf(sfafricontinent, filename)
+
+
 #example in geocomputation does work
 #world_agg3 = world %>%
 sfafricont = world %>%

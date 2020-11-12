@@ -104,7 +104,7 @@ plot(sf::st_geometry(sfafricapitals))
 ```
 
 
-```{r population grid, message=FALSE, warning=FALSE}
+```{r population-grid, message=FALSE, warning=FALSE}
 
 # raster grid
 # install.packages("raster") # if not already installed

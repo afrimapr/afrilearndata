@@ -85,7 +85,7 @@ library(raster)
 plot(rastafriwpop)
 ```
 
-<img src="man/figures/README-population grid-1.png" width="100%" />
+<img src="man/figures/README-population-grid-1.png" width="100%" />
 
 Interactive maps can be created using the `mapview` package.
 
