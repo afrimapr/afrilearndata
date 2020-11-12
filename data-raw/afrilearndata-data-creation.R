@@ -253,6 +253,16 @@ mapview(rastafriwpop_agg50) #highest density cell in lagos in sea
 mapview(rastafriwpop_agg100)
 
 #TODO why does 20km version cut off parts of W of continent ?
+# it doesn't when displayed in tmap
 
 rastafriwpop <- rastafriwpop_agg20
 usethis::use_data(rastafriwpop, overwrite = TRUE)
+
+#save raster as a tif file so reading in can be demonstrated
+# write to a new geotiff file (depends on rgdal)
+if (require(rgdal)) {
+        filename <- r"(inst/extdata/rastafriwpop.tif)" #windows safe paths
+        writeRaster(rastafriwpop, filename=filename, format="GTiff", overwrite=TRUE)
+}
+
+
