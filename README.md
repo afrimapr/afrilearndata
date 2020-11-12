@@ -21,27 +21,6 @@ Install the development version of afrilearndata with:
     # install.packages("remotes") # if not already installed
     
     remotes::install_github("afrimapr/afrilearndata")
-#> Downloading GitHub repo afrimapr/afrilearndata@master
-#> e1071 (1.7-3   -> 1.7-4) [CRAN]
-#> Rcpp  (1.0.4.6 -> 1.0.5) [CRAN]
-#> Installing 2 packages: e1071, Rcpp
-#> Installing packages into 'C:/Users/andy.south/AppData/Local/Temp/RtmpmOWpuO/temp_libpath43845b725855'
-#> (as 'lib' is unspecified)
-#> package 'e1071' successfully unpacked and MD5 sums checked
-#> package 'Rcpp' successfully unpacked and MD5 sums checked
-#> 
-#> The downloaded binary packages are in
-#>  C:\Users\andy.south\AppData\Local\Temp\RtmpWGbNUW\downloaded_packages
-#>          checking for file 'C:\Users\andy.south\AppData\Local\Temp\RtmpWGbNUW\remotes55c7f4744bd\afrimapr-afrilearndata-603bb45/DESCRIPTION' ...     checking for file 'C:\Users\andy.south\AppData\Local\Temp\RtmpWGbNUW\remotes55c7f4744bd\afrimapr-afrilearndata-603bb45/DESCRIPTION' ...   v  checking for file 'C:\Users\andy.south\AppData\Local\Temp\RtmpWGbNUW\remotes55c7f4744bd\afrimapr-afrilearndata-603bb45/DESCRIPTION' (408ms)
-#>       -  preparing 'afrilearndata':
-#>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   v  checking DESCRIPTION meta-information
-#>       -  checking for LF line-endings in source and make files and shell scripts
-#>       -  checking for empty or unneeded directories
-#>       -  building 'afrilearndata_0.0.0.9000.tar.gz'
-#>      
-#> 
-#> Installing package into 'C:/Users/andy.south/AppData/Local/Temp/RtmpmOWpuO/temp_libpath43845b725855'
-#> (as 'lib' is unspecified)
     
     library(afrilearndata)
 ```
@@ -65,9 +44,6 @@ make sure the objects are loaded.
 
 Firstly, here are all the data shown together. The `tmap` code to create
 this plot is shown later in the readme.
-
-    #> Warning: package 'sf' was built under R version 4.0.3
-    #> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
 
 <img src="man/figures/README-tmap-all-the-data-1.png" width="100%" />
 
@@ -106,7 +82,6 @@ plot(sf::st_geometry(sfafricapitals))
 # raster grid
 # install.packages("raster") # if not already installed
 library(raster)
-#> Loading required package: sp
 plot(rastafriwpop)
 ```
 
@@ -117,16 +92,14 @@ Interactive maps can be created using the `mapview` package.
 ``` r
 
 # install.packages("mapview") # if not already installed
-if (FALSE) {
+
+library(mapview)
+mapview::mapview(sfafricountries, zcol="name")  
   
-  library(mapview)
-  mapview::mapview(sfafricountries, zcol="name")  
-  
-}
 ```
 
-Now here is a repeat of the map shown at the start of the readme,
-together with the code used to create it.
+Here is a repeat of the map shown at the start of the readme, together
+with the code used to create it.
 
 ``` r
 

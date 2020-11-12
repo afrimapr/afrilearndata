@@ -25,7 +25,7 @@ afrilearndata provides small African datasets to help with learning and teaching
 
 Install the development version of afrilearndata with:
 
-```{r setup, warnings=FALSE}
+```{r setup, eval=FALSE, message=FALSE, warning=FALSE}
 
     # install.packages("remotes") # if not already installed
     
@@ -52,7 +52,7 @@ If they are not recognised you can use e.g. `data(sfafricountries)` to make sure
 
 Firstly, here are all the data shown together. The `tmap` code to create this plot is shown later in the readme. 
 
-```{r tmap-all-the-data, warnings=FALSE, echo=FALSE}
+```{r tmap-all-the-data, echo=FALSE, message=FALSE, warning=FALSE}
 #echo=FALSE to not show code in first version at top of readme
 #do show the code later
 
@@ -79,7 +79,7 @@ tm_legend(show = FALSE)
 
 Now looking at the data layers individually plotted with packages `sf` or `raster`
 
-```{r countries, warnings=FALSE}
+```{r countries, message=FALSE, warning=FALSE}
 
 library(afrilearndata)
 library(sf)
@@ -89,14 +89,14 @@ plot(sf::st_geometry(sfafricountries))
 
 ```
 
-```{r highway, warnings=FALSE}
+```{r highway, message=FALSE, warning=FALSE}
 
 # lines
 plot(sf::st_geometry(sfafrihway))
 
 ```
 
-```{r capitals, warnings=FALSE}
+```{r capitals, message=FALSE, warning=FALSE}
 
 # points
 plot(sf::st_geometry(sfafricapitals))
@@ -104,7 +104,7 @@ plot(sf::st_geometry(sfafricapitals))
 ```
 
 
-```{r population grid, warnings=FALSE}
+```{r population grid, message=FALSE, warning=FALSE}
 
 # raster grid
 # install.packages("raster") # if not already installed
@@ -115,18 +115,16 @@ plot(rastafriwpop)
 
 Interactive maps can be created using the `mapview` package.
 
-```{r interactive}
+```{r interactive, eval=FALSE}
 
 # install.packages("mapview") # if not already installed
-if (FALSE) {
+
+library(mapview)
+mapview::mapview(sfafricountries, zcol="name")  
   
-  library(mapview)
-  mapview::mapview(sfafricountries, zcol="name")  
-  
-}
 ```
 
-Now here is a repeat of the map shown at the start of the readme, together with the code used to create it.
+Here is a repeat of the map shown at the start of the readme, together with the code used to create it.
 
 ```{r tmap-code, warnings=FALSE, eval=TRUE, echo=TRUE}
 
