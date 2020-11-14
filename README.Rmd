@@ -105,6 +105,9 @@ plot(sf::st_geometry(sfafricapitals))
 ```
 
 
+Population density data are from WorldPop clipped to Africa and aggregated to 20km resolution to make them more manageable. WorldPop datasets are licensed under [Creative Commons Attribution 4.0 International] (https://creativecommons.org/licenses/by/4.0/).
+
+
 ```{r population-grid, message=FALSE, warning=FALSE}
 
 # raster grid

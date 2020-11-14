@@ -10,6 +10,7 @@
 #'
 #' @seealso
 #' https://www.worldpop.org
+#' WorldPop datasets are licensed under Creative Commons Attribution 4.0 International (CC BY 4.0) https://creativecommons.org/licenses/by/4.0/
 #'
 #' @source \url{https://www.worldpop.org/geodata/summary?id=24777}
 #' @docType data
@@ -38,6 +39,7 @@
 #'
 #' @seealso
 #' https://www.worldpop.org
+#' WorldPop datasets are licensed under Creative Commons Attribution 4.0 International (CC BY 4.0) https://creativecommons.org/licenses/by/4.0/
 #'
 #' @source \url{https://www.worldpop.org/geodata/summary?id=24757}
 #' @docType data
