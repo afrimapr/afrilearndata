@@ -167,16 +167,27 @@ mapview::mapview(rastafrikg)
 # maybe try generalising some worldpop data from package wopr instead
 # https://github.com/wpgp/wopr
 
-devtools::install_github('wpgp/wopr')
-library(wopr)
+# devtools::install_github('wpgp/wopr')
+# library(wopr)
 #but that seems to be all individual countries
 
-#or download 2020 global 30m (1km) data from here
+#download 2020 global 30m (1km) data from here
+#Unconstrained global mosaics
+#2020
 #https://www.worldpop.org/geodata/summary?id=24777
+#2000
+#https://www.worldpop.org/geodata/summary?id=24757
 #Estimated total number of people per grid-cell.
 #The dataset is available to download in Geotiff format at a resolution of 30 arc (approximately 1km at the equator).
 
+#include 2 years to allow calculation of pop change
+
+#2020
 filewpop <- r"(C:\Dropbox\_afrimapr\data\worldpop\ppp_2020_1km_Aggregated.tif)" #windows safe paths
+#2000
+filewpop <- r"(C:\Dropbox\_afrimapr\data\worldpop\ppp_2000_1km_Aggregated.tif)" #windows safe paths
+
+#TODO put code in loop below to be able to do for both 2020 and 2000
 
 library(raster)
 
@@ -220,24 +231,20 @@ sf::write_sf(sfafricontinent, filename)
 
 #example in geocomputation does work
 #world_agg3 = world %>%
-sfafricont = world %>%
-       group_by(continent) %>%
-       filter(continent=='Africa')  %>%
-       summarize()
+# sfafricont = world %>%
+#        group_by(continent) %>%
+#        filter(continent=='Africa')  %>%
+#        summarize()
 
 #could problem be something due to the out of date CRS from rnaturalearth ?
-
-#can I cut world coast by sfafricountries
 
 
 cr <- crop(rastwpop, extent(sfafricountries), snap="out")
 #dim(cr) 8662 8252    1
 #fr <- rasterize(sfafricountries, cr, silent=FALSE) #rasterise took >5 mins on 8k*8k grid
-fr <- rasterize(sfcontinent, cr, silent=FALSE) #rasterise takes >5 mins on 8k*8k grid
+fr <- rasterize(sfafricontinent, cr, silent=FALSE) #rasterise takes >5 mins on 8k*8k grid
 rastafriwpop <- mask(x=cr, mask=fr)
 plot(rastafriwpop)
-#backup
-rastafriwpopfullres <- rastafriwpop
 
 #still 8k * 8k cells
 
@@ -260,14 +267,26 @@ mapview(rastafriwpop_agg100)
 #TODO why does 20km version cut off parts of W of continent ?
 # it doesn't when displayed in tmap
 
-rastafriwpop <- rastafriwpop_agg20
-usethis::use_data(rastafriwpop, overwrite = TRUE)
+rastafriwpop2000 <- rastafriwpop_agg20
+rastafriwpop2020 <- rastafriwpop
+
+#sometimes needed to make sure data are associated with object (rather than being in file)
+rastafriwpop2000 <- readAll(rastafriwpop2000)
+
+usethis::use_data(rastafriwpop2000, overwrite = TRUE)
+usethis::use_data(rastafriwpop2020, overwrite = TRUE)
+
+#TODO change to rastafriwpop2020 and 2000
+#or should I make a raster brick ?
+
 
 #save raster as a tif file so reading in can be demonstrated
 # write to a new geotiff file (depends on rgdal)
 if (require(rgdal)) {
-        filename <- r"(inst/extdata/rastafriwpop.tif)" #windows safe paths
-        writeRaster(rastafriwpop, filename=filename, format="GTiff", overwrite=TRUE)
+        filename <- r"(inst/extdata/rastafriwpop2020.tif)" #windows safe paths
+        writeRaster(rastafriwpop2020, filename=filename, format="GTiff", overwrite=TRUE)
+        filename <- r"(inst/extdata/rastafriwpop2000.tif)" #windows safe paths
+        writeRaster(rastafriwpop2000, filename=filename, format="GTiff", overwrite=TRUE)
 }
 
 

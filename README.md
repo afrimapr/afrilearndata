@@ -33,8 +33,10 @@ The package contains the following objects
 2.  `sfafricontinent` polygons, continent outline including madagascar
 3.  `sfafrihway` lines, trans african highway network
 4.  `sfafricapitals` points, capital cities
-5.  `rastafriwpop` raster grid, modelled population density per square
-    km aggregated to 20km squares
+5.  `rastafriwpop2020` raster grid, population density 2020 from
+    WorldPop aggregated to 20km squares
+6.  `rastafriwpop2000` raster grid, population density 2000 from
+    WorldPop aggregated to 20km squares
 
 Lazy loading means that the objects should be accessible once
 `library(afrilearndata)` is used.
@@ -82,7 +84,7 @@ plot(sf::st_geometry(sfafricapitals))
 # raster grid
 # install.packages("raster") # if not already installed
 library(raster)
-plot(rastafriwpop)
+plot(rastafriwpop2020)
 ```
 
 <img src="man/figures/README-population-grid-1.png" width="100%" />
@@ -110,7 +112,7 @@ library(tmap)
 
 # tmap_mode("view") to set to tmap interactive viewing mode
 
-tm_shape(rastafriwpop) +
+tm_shape(rastafriwpop2020) +
     tm_raster("ppp_2020_1km_Aggregated", palette = rev(viridisLite::magma(5)), breaks=c(0,2,20,200,2000,25000)) +
     #tm_raster("ppp_2020_1km_Aggregated", palette = get_brewer_pal("BuPu", n = 7), style="fisher") + 
 tm_shape(sfafricountries) +
