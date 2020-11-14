@@ -34,9 +34,9 @@ The package contains the following objects
 3.  `sfafrihway` lines, trans african highway network
 4.  `sfafricapitals` points, capital cities
 5.  `rastafriwpop2020` raster grid, population density 2020 from
-    (WorldPop)\[<https://www.worldpop.org/>\] aggregated to 20km squares
+    [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
 6.  `rastafriwpop2000` raster grid, population density 2000 from
-    (WorldPop)\[<https://www.worldpop.org/>\] aggregated to 20km squares
+    [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
 
 Lazy loading means that the objects should be accessible once
 `library(afrilearndata)` is used.
@@ -81,9 +81,9 @@ plot(sf::st_geometry(sfafricapitals))
 
 Population density data are from WorldPop clipped to Africa and
 aggregated to 20km resolution to make them more manageable.
-(WorldPop)\[<https://www.worldpop.org/>\] datasets are licensed under
-(Creative Commons Attribution 4.0 International)
-\[<https://creativecommons.org/licenses/by/4.0/>\].
+[WorldPop](https://www.worldpop.org/) datasets are licensed under
+[Creative Commons Attribution 4.0
+International](https://creativecommons.org/licenses/by/4.0/).
 
 ``` r
 
