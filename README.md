@@ -125,9 +125,9 @@ tm_shape(sfafricountries) +
     tm_borders("white", lwd = .5) +
     #tm_text("iso_a3", size = "AREA") +
 tm_shape(sfafrihway) +
-    tm_lines(col = "blue") + 
+    tm_lines(col = "black") + 
 tm_shape(sfafricapitals) +
-    tm_symbols(col = "black", shape=1, alpha=0.4, scale = .6 ) + #shape=1 for open circle but not in view mode
+    tm_symbols(col = "blue", alpha=0.4, scale = .6 ) + #shape=1 for open circle but not in view mode
 tm_legend(show = FALSE)
 ```
 
