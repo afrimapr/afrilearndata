@@ -1,7 +1,7 @@
 ## code to prepare data objects from raw files stored in inst/extdata
 ## keeping the raw files allows the package also to be used to demonstrate reading in data
 
-
+#############################################################################
 # LINES
 
 
@@ -13,7 +13,7 @@ sfafrihway <- sfafrihway[ , which(names(sfafrihway)!='Description')]
 
 usethis::use_data(sfafrihway, overwrite = TRUE)
 
-
+############################################################################
 # POLYGONS
 # country boundaries from rnaturalearth
 # just selected columns, save as shapefile to extdata for reading demos
@@ -37,6 +37,39 @@ filename <- r"(inst/extdata/africountries.shp)" #windows safe paths
 sf::write_sf(sfafricountries, filename)
 #TODO check this
 #GDAL Message 1: Value 149229090 of field pop_est of feature 33 not successfully written. Possibly due to too larger number with respect to field width
+
+#####################################################################################
+# African continent
+
+#https://gis.stackexchange.com/questions/92221/extract-raster-from-raster-using-polygon-shapefile-in-r
+
+#sfworldland <- rnaturalearth::ne_download(scale='small',category='physical',type='land', returnclass = 'sf')
+#sfworldlandmed <- rnaturalearth::ne_download(scale='medium',category='physical',type='land', returnclass = 'sf')
+
+#see geocomputation
+#BUT getting internal lines current issue
+sfafricountries$continent <- "Africa"
+sfafricontinent = sfafricountries %>%
+        group_by(continent) %>%
+        summarize()
+
+plot(sf::st_geometry(sfafricontinent))
+
+#twitter example & set_precision fix
+sfcountries<- rnaturalearth::ne_countries(continent='Africa', returnclass='sf')
+sfafricontinent<- sfcountries %>%
+        group_by(continent) %>%
+        st_set_precision(10) %>% # edzers suggestion was 10000
+        summarize()
+plot(sf::st_geometry(sfafricontinent))
+
+#TODO may want to add some missing islands to the continent e.g. cape verde, comoros
+
+usethis::use_data(sfafricontinent, overwrite = TRUE)
+
+#save to extdata for reading demos
+filename <- r"(inst/extdata/africontinent.shp)" #windows safe paths
+sf::write_sf(sfafricontinent, filename)
 
 # potential 2nd polygon dataset of hexagonal equal area cartogram for African countries
 
@@ -124,10 +157,11 @@ sf::write_sf(sfafricapitals, filename)
 
 #mapview::mapview(sfafricapitals, zcol="name")
 
+##########################################################################
 # RASTER
-# TODO find a small raster datset
-#KoeppenGeiger 2017 half degree from kmz
 
+
+#KoeppenGeiger 2017 half degree from kmz
 filekmz <- r"(C:\Dropbox\_afrimapr\data\koeppen-geiger\Global_1986-2010_KG_30m.kmz)" #windows safe paths
 
 #filename <- r"(C:\Dropbox\_afrimapr\data\koeppen-geiger\Koeppen-Geiger-ASCII.txt)" #windows safe paths
@@ -182,111 +216,74 @@ mapview::mapview(rastafrikg)
 
 #include 2 years to allow calculation of pop change
 
-#2020
-filewpop <- r"(C:\Dropbox\_afrimapr\data\worldpop\ppp_2020_1km_Aggregated.tif)" #windows safe paths
-#2000
-filewpop <- r"(C:\Dropbox\_afrimapr\data\worldpop\ppp_2000_1km_Aggregated.tif)" #windows safe paths
-
 #TODO put code in loop below to be able to do for both 2020 and 2000
+# and cut unused code above
+afripop2000 <- afripop2020 <- NULL
 
-library(raster)
+for( year in c(2020,2000))
+{
+  cat(year,"\n")
 
-rastwpop <- raster(filewpop)
+  if (year==2020)
+     filewpop <- r"(C:\Dropbox\_afrimapr\data\worldpop\ppp_2020_1km_Aggregated.tif)" #windows safe paths
+  else
+     filewpop <- r"(C:\Dropbox\_afrimapr\data\worldpop\ppp_2000_1km_Aggregated.tif)" #windows safe paths
 
-plot(rastwpop)
-#too many pixels for mapview
-#mapview(rastwpop)
+  rastwpop <- raster(filewpop)
 
-#cookie cut to the African continent
-#https://gis.stackexchange.com/questions/92221/extract-raster-from-raster-using-polygon-shapefile-in-r
+  #plot(rastwpop)
 
-#sfworldland <- rnaturalearth::ne_download(scale='small',category='physical',type='land', returnclass = 'sf')
-#sfworldlandmed <- rnaturalearth::ne_download(scale='medium',category='physical',type='land', returnclass = 'sf')
+  #crop to the bbox
+  cr <- crop(rastwpop, extent(sfafricountries), snap="out")
+  #dim(cr) 8662 8252
 
-#see geocomputation
-#BUT getting internal lines current issue
-sfafricountries$continent <- "Africa"
-sfafricontinent = sfafricountries %>%
-     group_by(continent) %>%
-     summarize()
+  #rsaterize the continent
+  fr <- rasterize(sfafricontinent, cr, silent=FALSE) #rasterise takes >5 mins on 8k*8k grid
+  #mask by the continent
+  afripop <- mask(x=cr, mask=fr)
+  #plot(afripop)
 
-plot(sf::st_geometry(sfafricontinent))
+  #still 8k * 8k cells
+  #now want to aggregate(fact=[num cells in each direction])
 
-#twitter example & set_precision fix
-sfcountries<- rnaturalearth::ne_countries(continent='Africa', returnclass='sf')
-sfafricontinent<- sfcountries %>%
-        group_by(continent) %>%
-        st_set_precision(10) %>% # edzers suggestion was 10000
-        summarize()
-plot(sf::st_geometry(sfafricontinent))
+  #afripop_agg10 <- raster::aggregate(afripop, fun=mean, fact=10)
+  #still 800 * 800 cells that mapview doesn't like to display
 
-#TODO may want to add some missing islands to the continent e.g. cape verde, comoros
+  afripop_agg20 <- raster::aggregate(afripop, fun=mean, fact=20)
+  #afripop_agg50 <- raster::aggregate(afripop, fun=mean, fact=50)
+  #afripop_agg100 <- raster::aggregate(afripop, fun=mean, fact=100)
 
-usethis::use_data(sfafricontinent, overwrite = TRUE)
+  dim(afripop_agg20) #434 413   1
+  #dim(afripop_agg50) #174 166   1
 
-#save to extdata for reading demos
-filename <- r"(inst/extdata/africontinent.shp)" #windows safe paths
-sf::write_sf(sfafricontinent, filename)
+  #mapview(afripop_agg20) #BEST? > mapview happy
+  #mapview(afripop_agg50) #highest density cell in lagos in sea
 
+  #TODO why does 20km version cut off parts of W of continent ?
+  # it doesn't when displayed in tmap
 
-#example in geocomputation does work
-#world_agg3 = world %>%
-# sfafricont = world %>%
-#        group_by(continent) %>%
-#        filter(continent=='Africa')  %>%
-#        summarize()
+  #sometimes needed to make sure data are associated with object (rather than being in file)
+  afripop_agg20 <- readAll(afripop_agg20)
 
-#could problem be something due to the out of date CRS from rnaturalearth ?
+  if (year==2020)
+      afripop2020 <- afripop_agg20
+  else
+      afripop2000 <- afripop_agg20
+}
 
+usethis::use_data(afripop2000, overwrite = TRUE)
+usethis::use_data(afripop2020, overwrite = TRUE)
 
-cr <- crop(rastwpop, extent(sfafricountries), snap="out")
-#dim(cr) 8662 8252    1
-#fr <- rasterize(sfafricountries, cr, silent=FALSE) #rasterise took >5 mins on 8k*8k grid
-fr <- rasterize(sfafricontinent, cr, silent=FALSE) #rasterise takes >5 mins on 8k*8k grid
-rastafriwpop <- mask(x=cr, mask=fr)
-plot(rastafriwpop)
-
-#still 8k * 8k cells
-
-#now want to aggregate(fact=[num cells in each direction])
-
-rastafriwpop_agg10 <- raster::aggregate(rastafriwpop, fun=mean, fact=10)
-#still 800 * 800 cells that mapview doesn't like to display
-
-rastafriwpop_agg20 <- raster::aggregate(rastafriwpop, fun=mean, fact=20)
-rastafriwpop_agg50 <- raster::aggregate(rastafriwpop, fun=mean, fact=50)
-rastafriwpop_agg100 <- raster::aggregate(rastafriwpop, fun=mean, fact=100)
-
-dim(rastafriwpop_agg20) #434 413   1
-dim(rastafriwpop_agg50) #174 166   1
-
-mapview(rastafriwpop_agg20) #BEST? > mapview happy
-mapview(rastafriwpop_agg50) #highest density cell in lagos in sea
-mapview(rastafriwpop_agg100)
-
-#TODO why does 20km version cut off parts of W of continent ?
-# it doesn't when displayed in tmap
-
-rastafriwpop2000 <- rastafriwpop_agg20
-rastafriwpop2020 <- rastafriwpop
-
-#sometimes needed to make sure data are associated with object (rather than being in file)
-rastafriwpop2000 <- readAll(rastafriwpop2000)
-
-usethis::use_data(rastafriwpop2000, overwrite = TRUE)
-usethis::use_data(rastafriwpop2020, overwrite = TRUE)
-
-#TODO change to rastafriwpop2020 and 2000
+#TODO change to afripop2020 and 2000
 #or should I make a raster brick ?
-
 
 #save raster as a tif file so reading in can be demonstrated
 # write to a new geotiff file (depends on rgdal)
 if (require(rgdal)) {
-        filename <- r"(inst/extdata/rastafriwpop2020.tif)" #windows safe paths
-        writeRaster(rastafriwpop2020, filename=filename, format="GTiff", overwrite=TRUE)
-        filename <- r"(inst/extdata/rastafriwpop2000.tif)" #windows safe paths
-        writeRaster(rastafriwpop2000, filename=filename, format="GTiff", overwrite=TRUE)
+        filename <- r"(inst/extdata/afripop2020.tif)" #windows safe paths
+        writeRaster(afripop2020, filename=filename, format="GTiff", overwrite=TRUE)
+        filename <- r"(inst/extdata/afripop2000.tif)" #windows safe paths
+        writeRaster(afripop2000, filename=filename, format="GTiff", overwrite=TRUE)
 }
 
 

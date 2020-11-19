@@ -1,5 +1,5 @@
-#' @name rastafriwpop2020
-#' @aliases rastafriwpop20
+#' @name afripop2020
+#' @aliases afripop20
 #' @title modelled population density 2020 per square km from WorldPop aggregated to mean per 20km squares
 #'
 #' @description a \code{raster} object modelled population density 2020 per square km from WorldPop aggregated to mean per 20km squares
@@ -18,17 +18,17 @@
 #' @examples
 #' if (requireNamespace("raster", quietly = TRUE)) {
 #'   library(raster)
-#'   data(rastafriwpop2020)
+#'   data(afripop2020)
 #'   # or
-#'   filename <- system.file("extdata/rastafriwpop2020.tif", package="afrilearndata")
-#'   rastafriwpop2020 <- raster::raster(filename)
+#'   filename <- system.file("extdata/afripop2020.tif", package="afrilearndata")
+#'   afripop2020 <- raster::raster(filename)
 #'
-#'   plot(rastafriwpop2020)
+#'   plot(afripop2020)
 #' }
-"rastafriwpop2020"
+"afripop2020"
 
-#' @name rastafriwpop2000
-#' @aliases rastafriwpop00
+#' @name afripop2000
+#' @aliases afripop00
 #' @title modelled population density 2000 per square km from WorldPop aggregated to mean per 20km squares
 #'
 #' @description a \code{raster} object modelled population density 2000 per square km from WorldPop aggregated to mean per 20km squares
@@ -47,11 +47,11 @@
 #' @examples
 #' if (requireNamespace("raster", quietly = TRUE)) {
 #'   library(raster)
-#'   data(rastafriwpop2000)
+#'   data(afripop2000)
 #'   # or
-#'   filename <- system.file("extdata/rastafriwpop2000.tif", package="afrilearndata")
-#'   rastafriwpop2000 <- raster::raster(filename)
+#'   filename <- system.file("extdata/afripop2000.tif", package="afrilearndata")
+#'   afripop2000 <- raster::raster(filename)
 #'
-#'   plot(rastafriwpop2000)
+#'   plot(afripop2000)
 #' }
-"rastafriwpop2000"
+"afripop2000"

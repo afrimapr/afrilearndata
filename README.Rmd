@@ -43,8 +43,8 @@ The package contains the following objects
 1. `sfafricontinent`    polygons, continent outline including madagascar
 1. `sfafrihway`         lines, trans african highway network
 1. `sfafricapitals`     points, capital cities
-1. `rastafriwpop2020`   raster grid, population density 2020 from [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
-1. `rastafriwpop2000`   raster grid, population density 2000 from [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
+1. `afripop2020`   raster grid, population density 2020 from [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
+1. `afripop2000`   raster grid, population density 2000 from [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
 
 Lazy loading means that the objects should be accessible once `library(afrilearndata)` is used.
 
@@ -64,7 +64,7 @@ library(tmap)
 
 # tmap_mode("view") to set to tmap interactive viewing mode
 
-tm_shape(rastafriwpop2020) +
+tm_shape(afripop2020) +
     tm_raster("ppp_2020_1km_Aggregated", palette = rev(viridisLite::magma(5)), breaks=c(0,2,20,200,2000,25000)) +
     #tm_raster("ppp_2020_1km_Aggregated", palette = get_brewer_pal("BuPu", n = 7), style="fisher") + 
 tm_shape(sfafricountries) +
@@ -113,7 +113,7 @@ Population density data are from WorldPop clipped to Africa and aggregated to 20
 # raster grid
 # install.packages("raster") # if not already installed
 library(raster)
-plot(rastafriwpop2020)
+plot(afripop2020)
 
 ```
 
@@ -139,7 +139,7 @@ library(tmap)
 
 # tmap_mode("view") to set to tmap interactive viewing mode
 
-tm_shape(rastafriwpop2020) +
+tm_shape(afripop2020) +
     tm_raster("ppp_2020_1km_Aggregated", palette = rev(viridisLite::magma(5)), breaks=c(0,2,20,200,2000,25000)) +
     #tm_raster("ppp_2020_1km_Aggregated", palette = get_brewer_pal("BuPu", n = 7), style="fisher") + 
 tm_shape(sfafricountries) +
