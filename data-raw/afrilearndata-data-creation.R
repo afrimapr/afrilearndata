@@ -6,12 +6,12 @@
 
 
 filename <- r"(inst/extdata/trans-african-highway.kml)" #windows safe paths
-sfafrihway <- sf::read_sf(filename)
+afrihighway <- sf::read_sf(filename)
 
 #remove Description column, only has contents in first row
-sfafrihway <- sfafrihway[ , which(names(sfafrihway)!='Description')]
+afrihighway <- afrihighway[ , which(names(afrihighway)!='Description')]
 
-usethis::use_data(sfafrihway, overwrite = TRUE)
+usethis::use_data(afrihighway, overwrite = TRUE)
 
 ############################################################################
 # POLYGONS
@@ -21,20 +21,20 @@ usethis::use_data(sfafrihway, overwrite = TRUE)
 
 library(rnaturalearth)
 
-sfafricountries <- rnaturalearth::ne_countries(continent = 'Africa', returnclass = 'sf')
+africountries <- rnaturalearth::ne_countries(continent = 'Africa', returnclass = 'sf')
 
 columns_to_include <- c('name','name_long','iso_a3','pop_est','gdp_md_est','income_grp','lastcensus')
 
-sfafricountries <- sfafricountries[ , which(names(sfafricountries) %in% columns_to_include) ]
+africountries <- africountries[ , which(names(africountries) %in% columns_to_include) ]
 
 #maybe making sure CRS is correct
-sfafricountries <- sf::st_set_crs(sfafricountries,4326)
+africountries <- sf::st_set_crs(africountries,4326)
 
-usethis::use_data(sfafricountries, overwrite = TRUE)
+usethis::use_data(africountries, overwrite = TRUE)
 
 #save to extdata for reading demos
 filename <- r"(inst/extdata/africountries.shp)" #windows safe paths
-sf::write_sf(sfafricountries, filename)
+sf::write_sf(africountries, filename)
 #TODO check this
 #GDAL Message 1: Value 149229090 of field pop_est of feature 33 not successfully written. Possibly due to too larger number with respect to field width
 
@@ -48,28 +48,28 @@ sf::write_sf(sfafricountries, filename)
 
 #see geocomputation
 #BUT getting internal lines current issue
-sfafricountries$continent <- "Africa"
-sfafricontinent = sfafricountries %>%
+africountries$continent <- "Africa"
+africontinent = africountries %>%
         group_by(continent) %>%
         summarize()
 
-plot(sf::st_geometry(sfafricontinent))
+plot(sf::st_geometry(africontinent))
 
 #twitter example & set_precision fix
 sfcountries<- rnaturalearth::ne_countries(continent='Africa', returnclass='sf')
-sfafricontinent<- sfcountries %>%
+africontinent<- sfcountries %>%
         group_by(continent) %>%
         st_set_precision(10) %>% # edzers suggestion was 10000
         summarize()
-plot(sf::st_geometry(sfafricontinent))
+plot(sf::st_geometry(africontinent))
 
 #TODO may want to add some missing islands to the continent e.g. cape verde, comoros
 
-usethis::use_data(sfafricontinent, overwrite = TRUE)
+usethis::use_data(africontinent, overwrite = TRUE)
 
 #save to extdata for reading demos
 filename <- r"(inst/extdata/africontinent.shp)" #windows safe paths
-sf::write_sf(sfafricontinent, filename)
+sf::write_sf(africontinent, filename)
 
 # potential 2nd polygon dataset of hexagonal equal area cartogram for African countries
 
@@ -77,17 +77,17 @@ sf::write_sf(sfafricontinent, filename)
 
 library(geogrid)
 
-new_cells <- geogrid::calculate_grid(shape = sfafricountries, grid_type = "hexagonal", seed=4)
-sfafrihex <- assign_polygons(sfafricountries, new_cells)
+new_cells <- geogrid::calculate_grid(shape = africountries, grid_type = "hexagonal", seed=4)
+afrihex <- assign_polygons(africountries, new_cells)
 
-mapview::mapview(sfafrihex, label='name')
+mapview::mapview(afrihex, label='name')
 # Warning message: sf layer has inconsistent datum (+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs).
 # Need '+proj=longlat +datum=WGS84'
 
 # don't want 2 cells in madagascar
 # can modify random seed
 # for (i in 1:6) {
-#   new_cells <- calculate_grid(shape = sfafricountries, grid_type = 'hexagonal', seed = i)
+#   new_cells <- calculate_grid(shape = africountries, grid_type = 'hexagonal', seed = i)
 #   plot(new_cells, main = paste('Seed', i, sep=' '))
 # }
 
@@ -99,16 +99,16 @@ mapview::mapview(sfafrihex, label='name')
 #to add labels permanently to map
 library(tmap)
 tmap_mode("view")
-tmap::tm_shape(sfafrihex) +
+tmap::tm_shape(afrihex) +
        tm_borders("red") +
        tm_text("name", col='blue')
 
 #potential other tilemaps but gives error I think due to madagascar
 #install.packages("tilemaps")
 library(tilemaps)
-sfafritilemap <- generate_map(sfafricountries, square = FALSE, flat_topped = TRUE)
+afritilemap <- generate_map(africountries, square = FALSE, flat_topped = TRUE)
 # although coordinates are longitude/latitude, st_touches assumes that they are planar
-# Error in generate_map(sfafricountries, square = FALSE, flat_topped = TRUE) :
+# Error in generate_map(africountries, square = FALSE, flat_topped = TRUE) :
 #   regions are not contiguous
 
 
@@ -124,38 +124,38 @@ dfcapitals <- world.cities[ which(world.cities$capital==1), ]
 
 # may have problems with countrynames being different
 # this gets 45
-#dfafricapitals <- dfcapitals[ which(dfcapitals$country.etc %in% sfafricountries$name_long), ]
+#dfafricapitals <- dfcapitals[ which(dfcapitals$country.etc %in% africountries$name_long), ]
 
 #convert to iso3 using countrycode
 dfcapitals$iso3c <- countrycode::countrycode(dfcapitals$country.etc, origin = 'country.name', destination = 'iso3c')
 #use iso3c to identify capitals in Africa
 # now gets 52
-dfafricapitals <- dfcapitals[ which(dfcapitals$iso3c %in% sfafricountries$iso_a3), ]
+dfafricapitals <- dfcapitals[ which(dfcapitals$iso3c %in% africountries$iso_a3), ]
 # but that does include Serbia(iso3c NA) & Netherlands Antilles(iso3c NA) & Micronesia
 # down to 49
 dfafricapitals <- dfafricapitals[ !is.na(dfafricapitals$iso3c), ]
 
 #which capitals not included ?
-#sfafricountries$name_long[ -which(sfafricountries$iso_a3 %in% dfafricapitals$iso3c)]
+#africountries$name_long[ -which(africountries$iso_a3 %in% dfafricapitals$iso3c)]
 #[1] "South Sudan" "Somaliland"
 #TODO add capitals for "South Sudan" "Somaliland"
 
 #remove capital column
-sfafricapitals <- sfafricapitals[ , which(names(sfafricapitals) != "capital") ]
+africapitals <- africapitals[ , which(names(africapitals) != "capital") ]
 
 #rename column country.etc
-names(sfafricapitals)[2] <- "countryname"
+names(africapitals)[2] <- "countryname"
 
 #convert to sf: 4326 is CRS code for most common lat lon WGS84
-sfafricapitals <- sf::st_as_sf(dfafricapitals, coords=c("long","lat"), crs=4326)
+africapitals <- sf::st_as_sf(dfafricapitals, coords=c("long","lat"), crs=4326)
 
-usethis::use_data(sfafricapitals, overwrite = TRUE)
+usethis::use_data(africapitals, overwrite = TRUE)
 
 #save to extdata for reading demos - as geopackage for example and copes with longer column names
 filename <- r"(inst/extdata/africapitals.gpkg)" #windows safe paths
-sf::write_sf(sfafricapitals, filename)
+sf::write_sf(africapitals, filename)
 
-#mapview::mapview(sfafricapitals, zcol="name")
+#mapview::mapview(africapitals, zcol="name")
 
 ##########################################################################
 # RASTER
@@ -173,8 +173,8 @@ rastkg <- raster(filekmz)
 
 #cookie cut to the African continent
 #https://gis.stackexchange.com/questions/92221/extract-raster-from-raster-using-polygon-shapefile-in-r
-cr <- crop(rastkg, extent(sfafricountries), snap="out")
-fr <- rasterize(sfafricountries, cr)
+cr <- crop(rastkg, extent(africountries), snap="out")
+fr <- rasterize(africountries, cr)
 rastafrikg <- mask(x=cr, mask=fr)
 plot(rastafrikg)
 
@@ -234,11 +234,11 @@ for( year in c(2020,2000))
   #plot(rastwpop)
 
   #crop to the bbox
-  cr <- crop(rastwpop, extent(sfafricountries), snap="out")
+  cr <- crop(rastwpop, extent(africountries), snap="out")
   #dim(cr) 8662 8252
 
   #rsaterize the continent
-  fr <- rasterize(sfafricontinent, cr, silent=FALSE) #rasterise takes >5 mins on 8k*8k grid
+  fr <- rasterize(africontinent, cr, silent=FALSE) #rasterise takes >5 mins on 8k*8k grid
   #mask by the continent
   afripop <- mask(x=cr, mask=fr)
   #plot(afripop)

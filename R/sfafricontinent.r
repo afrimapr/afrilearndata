@@ -1,4 +1,4 @@
-#' @name sfafricontinent
+#' @name africontinent
 #' @aliases sfpolygon
 #' @title African country boundaries
 #'
@@ -21,10 +21,10 @@
 #' @examples
 #' if (requireNamespace("sf", quietly = TRUE)) {
 #'   library(sf)
-#'   data(sfafricontinent)
+#'   data(africontinent)
 #'   # or
-#'   sfafricontinent <- sf::read_sf(system.file("extdata/africontinent.shp", package="afrilearndata"))
+#'   africontinent <- sf::read_sf(system.file("extdata/africontinent.shp", package="afrilearndata"))
 #'
-#'   plot(sf::st_geometry(sfafricontinent))
+#'   plot(sf::st_geometry(africontinent))
 #' }
-"sfafricontinent"
+"africontinent"

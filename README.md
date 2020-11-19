@@ -29,10 +29,10 @@ Install the development version of afrilearndata with:
 
 The package contains the following objects
 
-1.  `sfafricountries` polygons, country boundaries
-2.  `sfafricontinent` polygons, continent outline including madagascar
-3.  `sfafrihway` lines, trans african highway network
-4.  `sfafricapitals` points, capital cities
+1.  `africountries` polygons, country boundaries
+2.  `africontinent` polygons, continent outline including madagascar
+3.  `afrihighway` lines, trans african highway network
+4.  `africapitals` points, capital cities
 5.  `afripop2020` raster grid, population density 2020 from
     [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
 6.  `afripop2000` raster grid, population density 2000 from
@@ -41,7 +41,7 @@ The package contains the following objects
 Lazy loading means that the objects should be accessible once
 `library(afrilearndata)` is used.
 
-If they are not recognised you can use e.g. `data(sfafricountries)` to
+If they are not recognised you can use e.g. `data(africountries)` to
 make sure the objects are loaded.
 
 Firstly, here are all the data shown together. The `tmap` code to create
@@ -58,7 +58,7 @@ library(afrilearndata)
 library(sf)
 
 # polygons
-plot(sf::st_geometry(sfafricountries))
+plot(sf::st_geometry(africountries))
 ```
 
 <img src="man/figures/README-countries-1.png" width="100%" />
@@ -66,7 +66,7 @@ plot(sf::st_geometry(sfafricountries))
 ``` r
 
 # lines
-plot(sf::st_geometry(sfafrihway))
+plot(sf::st_geometry(afrihighway))
 ```
 
 <img src="man/figures/README-highway-1.png" width="100%" />
@@ -74,7 +74,7 @@ plot(sf::st_geometry(sfafrihway))
 ``` r
 
 # points
-plot(sf::st_geometry(sfafricapitals))
+plot(sf::st_geometry(africapitals))
 ```
 
 <img src="man/figures/README-capitals-1.png" width="100%" />
@@ -102,7 +102,7 @@ Interactive maps can be created using the `mapview` package.
 # install.packages("mapview") # if not already installed
 
 library(mapview)
-mapview::mapview(sfafricountries, zcol="name")  
+mapview::mapview(africountries, zcol="name")  
   
 ```
 
@@ -121,12 +121,12 @@ library(tmap)
 tm_shape(afripop2020) +
     tm_raster("ppp_2020_1km_Aggregated", palette = rev(viridisLite::magma(5)), breaks=c(0,2,20,200,2000,25000)) +
     #tm_raster("ppp_2020_1km_Aggregated", palette = get_brewer_pal("BuPu", n = 7), style="fisher") + 
-tm_shape(sfafricountries) +
+tm_shape(africountries) +
     tm_borders("white", lwd = .5) +
     #tm_text("iso_a3", size = "AREA") +
-tm_shape(sfafrihway) +
+tm_shape(afrihighway) +
     tm_lines(col = "black") + 
-tm_shape(sfafricapitals) +
+tm_shape(africapitals) +
     tm_symbols(col = "blue", alpha=0.4, scale = .6 ) + #shape=1 for open circle but not in view mode
 tm_legend(show = FALSE)
 ```

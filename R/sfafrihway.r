@@ -1,4 +1,4 @@
-#' @name sfafrihway
+#' @name afrihighway
 #' @aliases sflines
 #' @title African trans-continental highway network lines
 #'
@@ -21,13 +21,13 @@
 #' @examples
 #' if (requireNamespace("sf", quietly = TRUE)) {
 #'   library(sf)
-#'   data(sfafrihway)
+#'   data(afrihighway)
 #'   # or
 #'   filename <- system.file("extdata/trans-african-highway.kml", package="afrilearndata")
-#'   sfafrihway <- sf::read_sf(filename)
+#'   afrihighway <- sf::read_sf(filename)
 #'   #remove Description column, only has contents in first row
-#'   sfafrihway <- sfafrihway[ , which(names(sfafrihway)!='Description')]
+#'   afrihighway <- afrihighway[ , which(names(afrihighway)!='Description')]
 #'
-#'   plot(sf::st_geometry(sfafrihway))
+#'   plot(sf::st_geometry(afrihighway))
 #' }
-"sfafrihway"
+"afrihighway"

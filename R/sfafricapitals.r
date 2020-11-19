@@ -1,4 +1,4 @@
-#' @name sfafricapitals
+#' @name africapitals
 #' @aliases sfpoints
 #' @title African capital city points
 #'
@@ -22,12 +22,12 @@
 #' @examples
 #' if (requireNamespace("sf", quietly = TRUE)) {
 #'   library(sf)
-#'   data(sfafricapitals)
+#'   data(africapitals)
 #'   # or
-#'   sfafricapitals <- sf::read_sf(system.file("extdata/africapitals.gpkg", package="afrilearndata"))
+#'   africapitals <- sf::read_sf(system.file("extdata/africapitals.gpkg", package="afrilearndata"))
 #'   #safe paths but I don't want to make complicated
 #'   #r"(extdata/africapitals.gpkg)"
 #'
-#'   #plot(sf::st_geometry(sfafricapitals))
+#'   #plot(sf::st_geometry(africapitals))
 #' }
-"sfafricapitals"
+"africapitals"
