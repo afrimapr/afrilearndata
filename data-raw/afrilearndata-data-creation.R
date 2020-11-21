@@ -27,6 +27,24 @@ columns_to_include <- c('name','name_long','iso_a3','pop_est','gdp_md_est','inco
 
 africountries <- africountries[ , which(names(africountries) %in% columns_to_include) ]
 
+# add columns for french, portuguese,
+library(countrycode)
+
+#africountries$name_fr <- countrycode(africountries$iso_a3, origin = 'iso3c', destination = 'iso.name.fr')
+africountries$name_fr <- countrycode(africountries$iso_a3, origin = 'iso3c', destination = 'cldr.short.fr')
+africountries$name_pt <- countrycode(africountries$iso_a3, origin = 'iso3c', destination = 'cldr.short.pt')
+# afrikaans
+africountries$name_af <- countrycode(africountries$iso_a3, origin = 'iso3c', destination = 'cldr.short.af')
+# swahili
+africountries$name_sw <- countrycode(africountries$iso_a3, origin = 'iso3c', destination = 'cldr.short.sw')
+
+
+#Somlaliland come out as NA so put back in
+africountries$name_fr[which(africountries$name=='Somaliland')] <- 'Somaliland'
+africountries$name_pt[which(africountries$name=='Somaliland')] <- 'Somaliland'
+africountries$name_af[which(africountries$name=='Somaliland')] <- 'Somaliland'
+africountries$name_sw[which(africountries$name=='Somaliland')] <- 'Somaliland'
+
 #maybe making sure CRS is correct
 africountries <- sf::st_set_crs(africountries,4326)
 
@@ -35,8 +53,12 @@ usethis::use_data(africountries, overwrite = TRUE)
 #save to extdata for reading demos
 filename <- r"(inst/extdata/africountries.shp)" #windows safe paths
 sf::write_sf(africountries, filename)
+
 #TODO check this
-#GDAL Message 1: Value 149229090 of field pop_est of feature 33 not successfully written. Possibly due to too larger number with respect to field width
+# I suspect problem with UTF accents
+# Warning message:
+# In CPL_write_ogr(obj, dsn, layer, driver, as.character(dataset_options),  :
+#                      GDAL Message 1: One or several characters couldn't be converted correctly from UTF-8 to ISO-8859-1.  This warning will not be emitted anymore.
 
 #####################################################################################
 # African continent
