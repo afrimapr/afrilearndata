@@ -27,6 +27,9 @@ columns_to_include <- c('name','name_long','iso_a3','pop_est','gdp_md_est','inco
 
 africountries <- africountries[ , which(names(africountries) %in% columns_to_include) ]
 
+# ensure pop_est is numeric
+africountries$pop_est <- as.numeric(africountries$pop_est)
+
 # add columns for french, portuguese,
 library(countrycode)
 
