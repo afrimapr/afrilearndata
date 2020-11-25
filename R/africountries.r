@@ -14,6 +14,10 @@
 #'     \item{income_grp} {character vector income group}
 #'     \item{iso_a3} {character vector ISO 3 letter country code}
 #'     \item{geometry} {sfc_MULTIPOLYGON}
+#'     \item{name_fr} {character vector French country names}
+#'     \item{name_pt} {character vector Portuguese country names}
+#'     \item{name_af} {character vector Afrikaans country names}
+#'     \item{name_sw} {character vector Swahili country names}
 #' }
 #'
 #' Geographical coordinates WGS84 datum (CRS EPSG 4326)
