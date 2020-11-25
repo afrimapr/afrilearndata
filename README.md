@@ -95,6 +95,24 @@ plot(afripop2020)
 
 <img src="man/figures/README-population-grid-1.png" width="100%" />
 
+The `africountries` data has country names in French, Portuguese,
+Swahili, Afrikaans and English, that can be used to label maps as
+follows.
+
+``` r
+
+library(afrilearndata)
+
+# install.packages("tmap") # if not already installed
+library(tmap)
+
+tm_shape(africountries) +
+     tm_borders("grey", lwd = .5) +
+     tm_text("name_fr", auto.placement=FALSE, remove.overlap=FALSE, just='centre', col='red4', size=0.7 )
+```
+
+<img src="man/figures/README-french-country-names-1.png" width="100%" />
+
 Interactive maps can be created using the `mapview` package.
 
 ``` r
