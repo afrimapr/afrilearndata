@@ -65,15 +65,14 @@ library(tmap)
 # tmap_mode("view") to set to tmap interactive viewing mode
 
 tm_shape(afripop2020) +
-    tm_raster("ppp_2020_1km_Aggregated", palette = rev(viridisLite::magma(5)), breaks=c(0,2,20,200,2000,25000)) +
-    #tm_raster("ppp_2020_1km_Aggregated", palette = get_brewer_pal("BuPu", n = 7), style="fisher") + 
+    tm_raster(palette = rev(viridisLite::magma(5)), breaks=c(0,2,20,200,2000,25000)) +
 tm_shape(africountries) +
     tm_borders("white", lwd = .5) +
     #tm_text("iso_a3", size = "AREA") +
 tm_shape(afrihighway) +
     tm_lines(col = "black") + 
 tm_shape(africapitals) +
-    tm_symbols(col = "blue", alpha=0.4, scale = .6 ) + #shape=1 for open circle but not in view mode
+    tm_symbols(col = "blue", alpha=0.4, scale = .6 )+
 tm_legend(show = FALSE)
 
 ```
@@ -154,15 +153,13 @@ library(tmap)
 # tmap_mode("view") to set to tmap interactive viewing mode
 
 tm_shape(afripop2020) +
-    tm_raster("ppp_2020_1km_Aggregated", palette = rev(viridisLite::magma(5)), breaks=c(0,2,20,200,2000,25000)) +
-    #tm_raster("ppp_2020_1km_Aggregated", palette = get_brewer_pal("BuPu", n = 7), style="fisher") + 
+    tm_raster(palette = rev(viridisLite::magma(5)), breaks=c(0,2,20,200,2000,25000)) +
 tm_shape(africountries) +
     tm_borders("white", lwd = .5) +
-    #tm_text("iso_a3", size = "AREA") +
 tm_shape(afrihighway) +
     tm_lines(col = "black") + 
 tm_shape(africapitals) +
-    tm_symbols(col = "blue", alpha=0.4, scale = .6 ) + #shape=1 for open circle but not in view mode
+    tm_symbols(col = "blue", alpha=0.4, scale = .6 )+
 tm_legend(show = FALSE)
 
 ```
