@@ -160,16 +160,40 @@ dfafricapitals <- dfcapitals[ which(dfcapitals$iso3c %in% africountries$iso_a3),
 # down to 49
 dfafricapitals <- dfafricapitals[ !is.na(dfafricapitals$iso3c), ]
 
+#remove capital column
+dfafricapitals <- dfafricapitals[ , which(names(dfafricapitals) != "capital") ]
+
+#rename column country.etc
+names(dfafricapitals)[1] <- "capitalname"
+names(dfafricapitals)[2] <- "countryname"
+
 #which capitals not included ?
 #africountries$name_long[ -which(africountries$iso_a3 %in% dfafricapitals$iso3c)]
 #[1] "South Sudan" "Somaliland"
 #TODO add capitals for "South Sudan" "Somaliland"
 
-#remove capital column
-africapitals <- africapitals[ , which(names(africapitals) != "capital") ]
+#https://geohack.toolforge.org/geohack.php?pagename=Juba&params=4_51_N_31_36_E_region:SS_type:city(525953)
+dfss <- data.frame(capitalname="Juba",
+                   countryname="South Sudan",
+                   pop=NA,
+                   lat=4.85,
+                   long=31.6,
+                   iso3c="SSD")
 
-#rename column country.etc
-names(africapitals)[2] <- "countryname"
+dfafricapitals <- rbind(dfafricapitals, dfss)
+
+#Somaliland should probably be part of Somalia according to international recognition
+#https://geohack.toolforge.org/geohack.php?pagename=Somaliland&params=9_33_N_44_03_E_type:city
+# dfso <- data.frame(capitalname="Hargeysa",
+#                    countryname="Somaliland",
+#                    pop=NA,
+#                    lat=9.55,
+#                    long=44.05,
+#                    iso3c="Somaliland")
+
+#?world.cities says pop is approximate population (as at January 2006)
+#I could try to update or find better source
+
 
 #convert to sf: 4326 is CRS code for most common lat lon WGS84
 africapitals <- sf::st_as_sf(dfafricapitals, coords=c("long","lat"), crs=4326)
@@ -310,5 +334,17 @@ if (require(rgdal)) {
         filename <- r"(inst/extdata/afripop2000.tif)" #windows safe paths
         writeRaster(afripop2000, filename=filename, format="GTiff", overwrite=TRUE)
 }
+
+
+#starting to look at landcover raster submitted by Chris Littleboy
+#https://github.com/chrislittleboy/publicdata/blob/main/afrimapr%20modis.R
+# > dim(africalowres)
+# [1] 2106 2373    1
+# > africalowres_agg4 <- raster::aggregate(africalowres, fun=modal, fact=4)
+# > dim(africalowres_agg4)
+# [1] 527 594   1 1
+# > africalowres_agg3 <- raster::aggregate(africalowres, fun=modal, fact=3)
+# > dim(africalowres_agg3)
+# [1] 702 791   1
 
 

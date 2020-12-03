@@ -6,11 +6,11 @@
 \alias{sfpoints}
 \title{African capital city points}
 \format{
-Formal class 'sf'; 49 rows 5 columns
+Formal class 'sf'; 50 rows 5 columns
 \itemize{
-\item{name} {character vector capital city names}
+\item{capitalname} {character vector capital city names}
 \item{countryname} {character vector country names}
-\item{pop} {numeric estimated population}
+\item{pop} {numeric estimated population 2006}
 \item{iso3c} {character vector ISO 3 letter country code}
 \item{geometry} {sfc_POINT}
 }
