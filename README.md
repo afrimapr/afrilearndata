@@ -141,7 +141,7 @@ tm_shape(afripop2020) +
 tm_shape(africountries) +
     tm_borders("white", lwd = .5) +
 tm_shape(afrihighway) +
-    tm_lines(col = "black") + 
+    tm_lines(col = "red") + 
 tm_shape(africapitals) +
     tm_symbols(col = "blue", alpha=0.4, scale = .6 )+
 tm_legend(show = FALSE)
