@@ -33,9 +33,10 @@ The package contains the following objects
 2.  `africontinent` polygons, continent outline including madagascar
 3.  `afrihighway` lines, trans african highway network
 4.  `africapitals` points, capital cities
-5.  `afripop2020` raster grid, population density 2020 from
+5.  `afriairports` points, airports
+6.  `afripop2020` raster grid, population density 2020 from
     [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
-6.  `afripop2000` raster grid, population density 2000 from
+7.  `afripop2000` raster grid, population density 2000 from
     [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
 
 Lazy loading means that the objects should be accessible once
@@ -44,8 +45,8 @@ Lazy loading means that the objects should be accessible once
 If they are not recognised you can use e.g. `data(africountries)` to
 make sure the objects are loaded.
 
-Firstly, here are all the data shown together. The `tmap` code to create
-this plot is shown later in the readme.
+Firstly, here are most of the data shown together. The `tmap` code to
+create this plot is shown later in the readme.
 
 <img src="man/figures/README-tmap-all-the-data-1.png" width="100%" />
 
@@ -120,7 +121,9 @@ Interactive maps can be created using the `mapview` package.
 # install.packages("mapview") # if not already installed
 
 library(mapview)
-mapview::mapview(africountries, zcol="name")  
+mapview::mapview(africountries, zcol="name")
+#here to show all airports on the continent
+mapview(afriairports, zcol='type', label='name', cex=2)
   
 ```
 

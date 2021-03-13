@@ -237,10 +237,10 @@ dfairall %>% group_by(type) %>% summarise(count = n())
 # 6 small_airport   2852
 
 #496
-dfairports_ml <- filter(dfairall, type=="large_airport" | type=="medium_airport" )
+#dfairports_ml <- dplyr::filter(dfairall, type=="large_airport" | type=="medium_airport" )
 
 #3348
-dfairports <- filter(dfairall, grepl("airport",dfairall$type))
+dfairports <- dplyr::filter(dfairall, grepl("airport",dfairall$type))
 
 #having small, medium large will be nice !! e.g. for plotting by country with different symbols
 #and 3k is not too many points I think
@@ -249,7 +249,7 @@ dfairports <- filter(dfairall, grepl("airport",dfairall$type))
 # get into sf
 afriairports <- sf::st_as_sf(dfairports, coords=c("longitude_deg", "latitude_deg"), crs=4326)
 
-mapview(afriairports, zcol='type', label='name')
+mapview(afriairports, zcol='type', label='name', cex=2)
 
 # example filtering by type & country
 afriair <- filter(afriairports, type=="large_airport" | type=="medium_airport" )
@@ -262,7 +262,8 @@ usethis::use_data(afriairports, overwrite = TRUE)
 
 # save as csv in the package
 filename <- r"(inst/extdata/afriairports.csv)" #windows safe paths
-write.csv(dfairports, filename)
+# needed to specify utf encoding otherwise accents get messed up
+write.csv(dfairports, filename, row.names=FALSE, fileEncoding="UTF-8")
 
 
 ##########################################################################
