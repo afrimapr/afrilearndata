@@ -137,8 +137,8 @@ afritilemap <- generate_map(africountries, square = FALSE, flat_topped = TRUE)
 #   regions are not contiguous
 
 
-
-# POINTS
+############################################################################
+# POINTS capitals
 # needs to go after polygons because uses country names from that
 
 library(maps)
@@ -206,9 +206,60 @@ sf::write_sf(africapitals, filename)
 
 #mapview::mapview(africapitals, zcol="name")
 
+
+############################################################################
+# POINTS CSV airports
+
+# can read directly from the website
+filename <- "https://ourairports.com/continents/AF/airports.csv"
+
+dfairall <- readr::read_csv(filename)
+
+nrow(dfairall)
+#[1] 3526
+
+names(dfairall)
+# [1] "id"                "ident"             "type"              "name"              "latitude_deg"
+# [6] "longitude_deg"     "elevation_ft"      "continent"         "country_name"      "iso_country"
+# [11] "region_name"       "iso_region"        "local_region"      "municipality"      "scheduled_service"
+# [16] "gps_code"          "iata_code"         "local_code"        "home_link"         "wikipedia_link"
+# [21] "keywords"          "score"             "last_updated"
+
+unique(dfairall$type)
+#[1] "large_airport"  "medium_airport" "small_airport"  "closed"         "heliport"       "seaplane_base"
+
+dfairall %>% group_by(type) %>% summarise(count = n())
+# 1 closed           107
+# 2 heliport          70
+# 3 large_airport     48
+# 4 medium_airport   448
+# 5 seaplane_base      1
+# 6 small_airport   2852
+
+#496
+dfairports_ml <- filter(dfairall, type=="large_airport" | type=="medium_airport" )
+
+#3348
+dfairports <- filter(dfairall, grepl("airport",dfairall$type))
+
+#having small, medium large will be nice !! e.g. for plotting by country with different symbols
+#and 3k is not too many points I think
+
+# get into sf
+afriairports <- sf::st_as_sf(dfairports, coords=c("longitude_deg", "latitude_deg"), crs=4326)
+
+mapview(afriairports, zcol='type')
+
+#save sf object in package
+usethis::use_data(africapitals, overwrite = TRUE)
+
+# save as csv in the package
+filename <- r"(inst/extdata/afriairports.csv)" #windows safe paths
+write.csv(dfairports, filename)
+
+
 ##########################################################################
 # RASTER
-
 
 #KoeppenGeiger 2017 half degree from kmz
 filekmz <- r"(C:\Dropbox\_afrimapr\data\koeppen-geiger\Global_1986-2010_KG_30m.kmz)" #windows safe paths
