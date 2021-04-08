@@ -28,7 +28,8 @@ if (requireNamespace("sf", quietly = TRUE)) {
   library(sf)
   data(africontinent)
   # or
-  africontinent <- sf::read_sf(system.file("extdata/africontinent.shp", package="afrilearndata"))
+  filename <- system.file("extdata","africontinent.shp", package="afrilearndata", mustWork=TRUE)
+  africontinent <- sf::read_sf(filename)
 
   plot(sf::st_geometry(africontinent))
 }

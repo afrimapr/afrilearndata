@@ -24,7 +24,7 @@ if (requireNamespace("raster", quietly = TRUE)) {
   library(raster)
   data(afripop2000)
   # or
-  filename <- system.file("extdata/afripop2000.tif", package="afrilearndata")
+  filename <- system.file("extdata","afripop2000.tif", package="afrilearndata", mustWork=TRUE)
   afripop2000 <- raster::raster(filename)
 
   plot(afripop2000)

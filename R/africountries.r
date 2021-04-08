@@ -33,8 +33,8 @@
 #'   library(sf)
 #'   data(africountries)
 #'   # or
-#'   africountries <- sf::read_sf(system.file("extdata/africountries.shp", package="afrilearndata"))
-#'
+#'   filename <- system.file("extdata","africountries.shp", package="afrilearndata", mustWork=TRUE)
+#'   africountries <- sf::read_sf(filename)#'
 #'   plot(sf::st_geometry(africountries))
 #' }
 "africountries"

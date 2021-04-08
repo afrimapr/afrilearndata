@@ -45,7 +45,8 @@
 #'   data(afriairports)
 #'
 #'   # or read from the csv file which is stored in package as example to work with
-#'   # dfairports <- readr::read_csv(system.file("extdata/afriairports.csv", package="afrilearndata"))
+#'   # filename <- system.file("extdata","afriairports.csv", package="afrilearndata", mustWork=TRUE)
+#'   # dfairports <- readr::read_csv(filename)
 #'   # and convert to sf object
 #'   # afriairports <- sf::st_as_sf(dfairports, coords=c("longitude_deg", "latitude_deg"), crs=4326)
 #'

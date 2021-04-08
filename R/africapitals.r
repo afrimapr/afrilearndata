@@ -24,9 +24,8 @@
 #'   library(sf)
 #'   data(africapitals)
 #'   # or
-#'   africapitals <- sf::read_sf(system.file("extdata/africapitals.gpkg", package="afrilearndata"))
-#'   #safe paths but I don't want to make complicated
-#'   #r"(extdata/africapitals.gpkg)"
+#'   filename <- system.file("extdata","africapitals.gpkg", package="afrilearndata", mustWork=TRUE)
+#'   africapitals <- sf::read_sf(filename)
 #'
 #'   #plot(sf::st_geometry(africapitals))
 #' }

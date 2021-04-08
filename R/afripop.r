@@ -20,7 +20,7 @@
 #'   library(raster)
 #'   data(afripop2020)
 #'   # or
-#'   filename <- system.file("extdata/afripop2020.tif", package="afrilearndata")
+#'   filename <- system.file("extdata","afripop2020.tif", package="afrilearndata", mustWork=TRUE)
 #'   afripop2020 <- raster::raster(filename)
 #'
 #'   plot(afripop2020)
@@ -49,7 +49,7 @@
 #'   library(raster)
 #'   data(afripop2000)
 #'   # or
-#'   filename <- system.file("extdata/afripop2000.tif", package="afrilearndata")
+#'   filename <- system.file("extdata","afripop2000.tif", package="afrilearndata", mustWork=TRUE)
 #'   afripop2000 <- raster::raster(filename)
 #'
 #'   plot(afripop2000)

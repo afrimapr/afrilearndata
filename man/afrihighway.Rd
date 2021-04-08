@@ -28,7 +28,7 @@ if (requireNamespace("sf", quietly = TRUE)) {
   library(sf)
   data(afrihighway)
   # or
-  filename <- system.file("extdata/trans-african-highway.kml", package="afrilearndata")
+  filename <- system.file("extdata","trans-african-highway.kml", package="afrilearndata", mustWork=TRUE)
   afrihighway <- sf::read_sf(filename)
   #remove Description column, only has contents in first row
   afrihighway <- afrihighway[ , which(names(afrihighway)!='Description')]
