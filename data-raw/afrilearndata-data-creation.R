@@ -406,4 +406,110 @@ if (require(rgdal)) {
 # > dim(africalowres_agg3)
 # [1] 702 791   1
 
+library(MODIS)
+library(raster)
+
+##### Download data #####
+
+# EarthdataLogin(usr = "usernamehere", pwd = "passwordhere")
+EarthdataLogin(usr = "southandy", pwd = "Bpek2881")
+
+# you need to create an account with EarthData to access products and use the above to set up a hidden file with the details
+
+template_raster <- raster(choose.files())
+# selects a template raster for the download
+# mine uses afripop data from here (https://www.worldpop.org/doi/10.5258/SOTON/WP00004), but this could be anything
+# The data downloaded will have the same resolution and extent as the template
+
+#### WARNING, this takes a lot of time and a good internet connection...
+# runGdal(product = "MCD12C1", # gets MODIS land cover data https://lpdaac.usgs.gov/products/mcd12c1v006/
+#         begin = "2019-01-01", # gets latest map from date range (it is a time series)
+#         extent = template_raster) # sets the extent, resolution and projection of template raster)
+
+runGdal(product = "MCD12C1", # gets MODIS land cover data https://lpdaac.usgs.gov/products/mcd12c1v006/
+        begin = "2019-01-01", # gets latest map from date range (it is a time series)
+        extent = afripop2020) # sets the extent, resolution and projection of template raster)
+
+# TODO : maybe I don't want to download at the low res, i.e. based on
+
+# outProj          =  +proj=longlat +datum=WGS84 +no_defs  (if applicable, derived from Raster*/Spatial*/sf* object)
+# pixelSize        =  0.1666667 0.1666667  (if applicable, derived from Raster* object)
+# resamplingType   =  near
+# Output directory =  C:/Users/andy.south/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645  (no 'job' name specified, generated (date/time based))
+
+# it did take > 1 hour probably < 3
+# [1] "C:/Users/ANDY~1.SOU/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645/MCD12C1.A2019001.Majority_Land_Cover_Type_1.tif"
+# [2] "C:/Users/ANDY~1.SOU/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645/MCD12C1.A2019001.Majority_Land_Cover_Type_1_Assessment.tif"
+# [3] "C:/Users/ANDY~1.SOU/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645/MCD12C1.A2019001.Land_Cover_Type_1_Percent.tif"
+# [4] "C:/Users/ANDY~1.SOU/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645/MCD12C1.A2019001.Majority_Land_Cover_Type_2.tif"
+# [5] "C:/Users/ANDY~1.SOU/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645/MCD12C1.A2019001.Majority_Land_Cover_Type_2_Assessment.tif"
+# [6] "C:/Users/ANDY~1.SOU/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645/MCD12C1.A2019001.Land_Cover_Type_2_Percent.tif"
+# [7] "C:/Users/ANDY~1.SOU/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645/MCD12C1.A2019001.Majority_Land_Cover_Type_3.tif"
+# [8] "C:/Users/ANDY~1.SOU/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645/MCD12C1.A2019001.Majority_Land_Cover_Type_3_Assessment.tif"
+# [9] "C:/Users/ANDY~1.SOU/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645/MCD12C1.A2019001.Land_Cover_Type_3_Percent.tif"
+
+
+##### Load and process the data #####
+
+#africalandcover <- raster("C:/Users/chris/AppData/Local/Temp/RtmpyGhBy4/MODIS_ARC/PROCESSED/MCD12C1.006_20201130174243/MCD12C1.A2019001.Majority_Land_Cover_Type_1.tif")
+
+afrilandcover <- raster("C:/Users/ANDY~1.SOU/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645/MCD12C1.A2019001.Majority_Land_Cover_Type_1.tif")
+
+dim(afrilandcover)
+# [1] 434 413   1 Cool this is the same as afripop2020
+
+#africalowres <- africalandcover
+
+library(plotKML)
+data(worldgrids_pal) # loads package with the colour palette for IGBP classification system
+afrilandcover <- ratify(afrilandcover)
+rat <- levels(afrilandcover)[[1]] # creates a raster attribute table using the classification system
+igbp <- as.data.frame(as.list(worldgrids_pal)[7]) # extracts igbp classification info
+
+rat$landcover <- rownames(igbp)[rat$ID+1]
+rat$colour <- igbp$IGBP[rat$ID+1]
+
+levels(afrilandcover) <- rat
+
+#TODO is there a better way to get mapview to recognise the colours ?
+#TODO should I crop to the continent boundary
+#TODO add documentation for the dataset
+mapview(afrilandcover, col.regions = levels(afrilandcover)[[1]]$colour, att = "landcover")
+
+
+#### test plot the raster
+library(rasterVis)
+levelplot(afrilandcover,
+          col.regions = rat$colour,
+          main = "Land Cover in Africa (Source: MODIS MCD12C1)")
+
+# save data object in package
+usethis::use_data(afrilandcover, overwrite = TRUE)
+# write file to package, as grd file to preserve raster attribute table
+filename <- r"(inst/extdata/afrilandcover.grd)" #windows safe paths
+writeRaster(afrilandcover, filename) # writes as grd to preserve rat
+
+
+
+
+
+
+
+
+# potential different approach to get the same data
+# https://rspatialdata.github.io/land_cover.html
+# library(MODIStsp)
+# MODIStsp(gui             = FALSE,
+#          out_folder      = "LandCoverData",
+#          out_folder_mod  = "LandCoverData",
+#          selprod         = "LandCover_Type_Yearly_500m (MCD12Q1)",
+#          bandsel         = "LC1",
+#          user            = "mstp_test" ,
+#          password        = "MSTP_test_01",
+#          start_date      = "2019.01.01",
+#          end_date        = "2019.12.31",
+#          verbose         = FALSE,
+#          spatmeth        = "file",
+#          spafile         = spatial_filepath,
+#          out_format      = "GTiff")
 

@@ -1,0 +1,29 @@
+[general]
+creator=R package 'raster'
+created=2021-05-25 12:39:58
+[georeference]
+nrows=434
+ncols=413
+xmin=-17.626249915
+ymin=-34.975416325
+xmax=51.207083143
+ymax=37.357916719
+projection=+proj=longlat +datum=WGS84 +no_defs
+[data]
+datatype=FLT4S
+byteorder=little
+nbands=1
+bandorder=BIL
+categorical=TRUE
+ratnames=ID:landcover:colour
+rattypes=integer:character:character
+ratvalues=0:1:2:4:5:6:7:8:9:10:11:12:13:14:16:Water:Evergreen Needleleaf forest:Evergreen Broadleaf forest:Deciduous Broadleaf forest:Mixed forest:Closed shrublands:Open shrublands:Woody savannas:Savannas:Grasslands:Permanent wetlands:Croplands:Urban and built-up:Cropland/Natural vegetation mosaic:Barren or sparsely vegetated:#3708FF:#008D02:#00F90A:#CEFED4:#31A278:#A84974:#FFD3A0:#CAFE8F:#F7D600:#FFA800:#008C94:#FAFE03:#FF2A00:#8A9000:#AAAAAA
+minvalue=0
+maxvalue=16
+nodatavalue=-3.4e+38
+[legend]
+legendtype=
+values=
+color=
+[description]
+layername=MCD12C1.A2019001.Majority_Land_Cover_Type_1
