@@ -412,7 +412,6 @@ library(raster)
 ##### Download data #####
 
 # EarthdataLogin(usr = "usernamehere", pwd = "passwordhere")
-EarthdataLogin(usr = "southandy", pwd = "Bpek2881")
 
 # you need to create an account with EarthData to access products and use the above to set up a hidden file with the details
 
