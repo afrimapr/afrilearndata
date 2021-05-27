@@ -477,7 +477,7 @@ levels(afrilandcover) <- rat
 mapview(afrilandcover, col.regions = levels(afrilandcover)[[1]]$colour, att = "landcover")
 
 
-#### test plot the raster
+# this is how rasterVis plots using the rat
 library(rasterVis)
 levelplot(afrilandcover,
           col.regions = rat$colour,
