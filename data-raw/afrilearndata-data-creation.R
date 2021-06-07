@@ -454,14 +454,15 @@ runGdal(product = "MCD12C1", # gets MODIS land cover data https://lpdaac.usgs.go
 
 filename <- "C:\\Dropbox\\_afrimapr\\data\\landcover-modis\\MCD12C1.A2019001.Majority_Land_Cover_Type_1.tif"
 
-afrilandcover <- raster(filename)
-
+afrilandcover <- raster(filename, values=TRUE)
 
 
 dim(afrilandcover)
 # [1] 434 413   1 Cool this is the same as afripop2020
 
-#africalowres <- africalandcover
+# rename the name for the layer stored in the object
+names(afrilandcover) <- "landcover"
+
 
 library(plotKML)
 data(worldgrids_pal) # loads package with the colour palette for IGBP classification system
@@ -476,7 +477,7 @@ levels(afrilandcover) <- rat
 
 #TODO is there a better way to get mapview to recognise the colours ?
 #TODO should I crop to the continent boundary
-mapview(afrilandcover, col.regions = levels(afrilandcover)[[1]]$colour, att = "landcover")
+mapview(afrilandcover, att="landcover", col.regions=levels(afrilandcover)[[1]]$colour)
 
 
 # this is how rasterVis plots using the rat
@@ -485,16 +486,19 @@ levelplot(afrilandcover,
           col.regions = rat$colour,
           main = "Land Cover in Africa (Source: MODIS MCD12C1)")
 
-# save data object in package
-usethis::use_data(afrilandcover, overwrite = TRUE)
 # write file to package, as grd file to preserve raster attribute table
 filename <- r"(inst/extdata/afrilandcover.grd)" #windows safe paths
 writeRaster(afrilandcover, filename, overwrite=TRUE) # writes as grd to preserve rat
 
+# save data object in package
+# IMPORTANT this seems to have to go after writeRaster()
+# otherwise raster::plot(afrilandcover) gives: Error in .local(.Object, ...)
+usethis::use_data(afrilandcover, overwrite = TRUE)
+
 # test reading in again
 filename <- system.file("extdata","afrilandcover.grd", package="afrilearndata", mustWork=TRUE)
 testlc <- raster::raster(filename)
-mapview(testlc, col.regions = levels(testlc)[[1]]$colour, att = "landcover")
+mapview(testlc, att="landcover", col.regions=levels(testlc)[[1]]$colour)
 
 
 

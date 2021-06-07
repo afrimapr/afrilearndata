@@ -1,6 +1,6 @@
 [general]
 creator=R package 'raster'
-created=2021-06-07 12:21:00
+created=2021-06-07 14:47:38
 [georeference]
 nrows=434
 ncols=413
@@ -26,4 +26,4 @@ legendtype=
 values=
 color=
 [description]
-layername=MCD12C1.A2019001.Majority_Land_Cover_Type_1
+layername=landcover
