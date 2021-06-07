@@ -2,7 +2,7 @@ Package: afrilearndata
 Title: Small Africa Map Datasets for Learning
 Version: 0.0.0.9001
 Authors@R: 
-    person(given = "Andy",
+    c(person(given = "Andy",
            family = "South",
            role = c("aut", "cre"),
            email = "southandy@gmail.com",
