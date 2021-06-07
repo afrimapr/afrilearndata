@@ -25,6 +25,7 @@ africapitals
 }
 \description{
 a \code{sf} object points of African capital cities
+See data-raw/afrilearndata-creation.R for how the data object is created.
 }
 \examples{
 if (requireNamespace("sf", quietly = TRUE)) {

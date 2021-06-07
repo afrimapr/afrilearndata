@@ -40,7 +40,8 @@ Geographical coordinates WGS84 datum (CRS EPSG 4326)
 afriairports
 }
 \description{
-a \code{sf} object points of African airports
+a \code{sf} object points of African airports.
+See data-raw/afrilearndata-creation.R for how the data object is created.
 }
 \examples{
 if (requireNamespace("sf", quietly = TRUE)) {

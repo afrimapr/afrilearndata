@@ -3,6 +3,7 @@
 #' @title modelled population density 2020 per square km from WorldPop aggregated to mean per 20km squares
 #'
 #' @description a \code{raster} object modelled population density 2020 per square km from WorldPop aggregated to mean per 20km squares
+#' See data-raw/afrilearndata-creation.R for how the data object is created.
 #'
 #' @format Formal class 'raster';
 #'

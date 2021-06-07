@@ -3,6 +3,7 @@
 #' @title African trans-continental highway network lines
 #'
 #' @description a \code{sf} object of simplified lines of transcontinental highway network
+#' See data-raw/afrilearndata-creation.R for how the data object is created.
 #'
 #' @format Formal class 'sf'; 100 rows, 2 columns
 #' \itemize{

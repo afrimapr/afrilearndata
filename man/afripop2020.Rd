@@ -18,6 +18,7 @@ afripop2020
 }
 \description{
 a \code{raster} object modelled population density 2020 per square km from WorldPop aggregated to mean per 20km squares
+See data-raw/afrilearndata-creation.R for how the data object is created.
 }
 \examples{
 if (requireNamespace("raster", quietly = TRUE)) {

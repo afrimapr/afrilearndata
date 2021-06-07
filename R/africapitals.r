@@ -3,6 +3,7 @@
 #' @title African capital city points
 #'
 #' @description a \code{sf} object points of African capital cities
+#' See data-raw/afrilearndata-creation.R for how the data object is created.
 #'
 #' @format Formal class 'sf'; 50 rows 5 columns
 #' \itemize{

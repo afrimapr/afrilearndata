@@ -3,6 +3,7 @@
 #' @title African country boundaries
 #'
 #' @description a \code{sf} object containing low resolution African continent outline
+#' See data-raw/afrilearndata-creation.R for how the data object is created.
 #'
 #' @format Formal class 'sf';
 #' \itemize{

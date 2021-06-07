@@ -22,6 +22,7 @@ afrihighway
 }
 \description{
 a \code{sf} object of simplified lines of transcontinental highway network
+See data-raw/afrilearndata-creation.R for how the data object is created.
 }
 \examples{
 if (requireNamespace("sf", quietly = TRUE)) {
