@@ -450,9 +450,13 @@ runGdal(product = "MCD12C1", # gets MODIS land cover data https://lpdaac.usgs.go
 
 ##### Load and process the data #####
 
-#africalandcover <- raster("C:/Users/chris/AppData/Local/Temp/RtmpyGhBy4/MODIS_ARC/PROCESSED/MCD12C1.006_20201130174243/MCD12C1.A2019001.Majority_Land_Cover_Type_1.tif")
+#filename <- "C:/Users/ANDY~1.SOU/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645/MCD12C1.A2019001.Majority_Land_Cover_Type_1.tif"
 
-afrilandcover <- raster("C:/Users/ANDY~1.SOU/AppData/Local/Temp/RtmpwLMEUp/MODIS_ARC/PROCESSED/MCD12C1.006_20210525103645/MCD12C1.A2019001.Majority_Land_Cover_Type_1.tif")
+filename <- "C:\\Dropbox\\_afrimapr\\data\\landcover-modis\\MCD12C1.A2019001.Majority_Land_Cover_Type_1.tif"
+
+afrilandcover <- raster(filename)
+
+
 
 dim(afrilandcover)
 # [1] 434 413   1 Cool this is the same as afripop2020
@@ -472,7 +476,6 @@ levels(afrilandcover) <- rat
 
 #TODO is there a better way to get mapview to recognise the colours ?
 #TODO should I crop to the continent boundary
-#TODO add documentation for the dataset
 mapview(afrilandcover, col.regions = levels(afrilandcover)[[1]]$colour, att = "landcover")
 
 
@@ -486,8 +489,12 @@ levelplot(afrilandcover,
 usethis::use_data(afrilandcover, overwrite = TRUE)
 # write file to package, as grd file to preserve raster attribute table
 filename <- r"(inst/extdata/afrilandcover.grd)" #windows safe paths
-writeRaster(afrilandcover, filename) # writes as grd to preserve rat
+writeRaster(afrilandcover, filename, overwrite=TRUE) # writes as grd to preserve rat
 
+# test reading in again
+filename <- system.file("extdata","afrilandcover.grd", package="afrilearndata", mustWork=TRUE)
+testlc <- raster::raster(filename)
+mapview(testlc, col.regions = levels(testlc)[[1]]$colour, att = "landcover")
 
 
 

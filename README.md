@@ -38,6 +38,8 @@ The package contains the following objects
     [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
 7.  `afripop2000` raster grid, population density 2000 from
     [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
+8.  `afrilandcover` raster grid, landcover in 2019, categorical, 20km
+    from [MODIS](https://lpdaac.usgs.gov/products/mcd12c1v006/)
 
 Lazy loading means that the objects should be accessible once
 `library(afrilearndata)` is used.
