@@ -454,6 +454,7 @@ runGdal(product = "MCD12C1", # gets MODIS land cover data https://lpdaac.usgs.go
 
 filename <- "C:\\Dropbox\\_afrimapr\\data\\landcover-modis\\MCD12C1.A2019001.Majority_Land_Cover_Type_1.tif"
 
+# values=TRUE needed to make sure values are stored in the object
 afrilandcover <- raster(filename, values=TRUE)
 
 
@@ -475,16 +476,35 @@ rat$colour <- igbp$IGBP[rat$ID+1]
 
 levels(afrilandcover) <- rat
 
+#TODO crop to the continent boundary to remove seacells
+
+
+
+
 #TODO is there a better way to get mapview to recognise the colours ?
-#TODO should I crop to the continent boundary
 mapview(afrilandcover, att="landcover", col.regions=levels(afrilandcover)[[1]]$colour)
 
 
 # this is how rasterVis plots using the rat
+# BUT this uses rat in separate file, also seems not to be able to use
+# one stored in the raster object
 library(rasterVis)
 levelplot(afrilandcover,
           col.regions = rat$colour,
           main = "Land Cover in Africa (Source: MODIS MCD12C1)")
+
+# using tmap
+tm_shape(afrilandcover) + tm_raster("landcover")
+#fails w or w/out quotes
+#tm_shape(afrilandcover) + tm_raster("landcover", palette="colour")
+tm_shape(afrilandcover) + tm_raster("landcover", palette=levels(afrilandcover)[[1]]$colour)
+
+#now I see that tmap has a global landcover as a stars object
+#but doesn't have the colour palette saved in the object
+# data(land)
+# pal8 <- c("#33A02C", "#B2DF8A", "#FDBF6F", "#1F78B4", "#999999", "#E31A1C", "#E6E6E6", "#A6CEE3")
+# tm_shape(land, ylim = c(-88,88)) +
+#   tm_raster("cover_cls", palette = pal8, title = "Global Land Cover")
 
 # write file to package, as grd file to preserve raster attribute table
 filename <- r"(inst/extdata/afrilandcover.grd)" #windows safe paths
@@ -500,9 +520,25 @@ filename <- system.file("extdata","afrilandcover.grd", package="afrilearndata", 
 testlc <- raster::raster(filename)
 mapview(testlc, att="landcover", col.regions=levels(testlc)[[1]]$colour)
 
+# test reading in as a stars object
 
+#proxy=FALSE ensures data are loaded but probably not necessary for this small grid
+afrilandstars <- stars::read_stars(filename, proxy=FALSE)
 
+#stars plots the categories well, but does not seem to retain the colours ?
+#and the labels get trun
+plot(afrilandstars)
+#mapview likewise
+mapview(afrilandstars)
 
+#TODO can I get stars to store & plot the colours ?
+
+#seems from here that a colour attribute can be set
+#https://github.com/r-spatial/stars/issues/392#issuecomment-788812130
+attr(r$f, "colors") = c("#b41614", "#3cfa96")
+
+#but how can it be read from the grd file ?
+#or maybe I should save as a tiff like above too ?
 
 
 
