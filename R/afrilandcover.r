@@ -26,4 +26,14 @@
 #'
 #'   plot(afrilandcover)
 #' }
+#'
+#' # interactive plotting with mapview
+#' if (requireNamespace("mapview", quietly = TRUE)) {
+#'   library(mapview)
+#'   mapview(afrilandcover,
+#'           att="landcover",
+#'           col.regions=levels(afrilandcover)[[1]]$colour)
+#' }
+#'
+#'
 "afrilandcover"

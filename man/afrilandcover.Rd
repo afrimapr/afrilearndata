@@ -31,6 +31,16 @@ if (requireNamespace("raster", quietly = TRUE)) {
 
   plot(afrilandcover)
 }
+
+# interactive plotting with mapview
+if (requireNamespace("mapview", quietly = TRUE)) {
+  library(mapview)
+  mapview(afrilandcover,
+          att="landcover",
+          col.regions=levels(afrilandcover)[[1]]$colour)
+}
+
+
 }
 \seealso{
 Friedl, M., D. Sulla-Menashe. MCD12C1 MODIS/Terra+Aqua Land Cover Type Yearly L3 Global 0.05Deg CMG V006. 2015, distributed by NASA EOSDIS Land Processes DAAC, https://doi.org/10.5067/MODIS/MCD12C1.006. Accessed 2021-06-07.#'
