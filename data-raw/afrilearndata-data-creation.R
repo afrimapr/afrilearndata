@@ -58,10 +58,12 @@ filename <- r"(inst/extdata/africountries.shp)" #windows safe paths
 sf::write_sf(africountries, filename)
 
 #TODO check this
-# I suspect problem with UTF accents
+# I suspect problem with UTF accents & a high popn. value
 # Warning message:
 # In CPL_write_ogr(obj, dsn, layer, driver, as.character(dataset_options),  :
 #                      GDAL Message 1: One or several characters couldn't be converted correctly from UTF-8 to ISO-8859-1.  This warning will not be emitted anymore.
+# In CPL_write_ogr(obj, dsn, layer, driver, as.character(dataset_options),  :
+#                      GDAL Message 1: Value 149229090 of field pop_est of feature 33 not successfully written. Possibly due to too larger number with respect to field width
 
 #####################################################################################
 # African continent
