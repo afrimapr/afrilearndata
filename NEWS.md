@@ -1,10 +1,12 @@
 
 
+## afrilearndata 0.0.0.9003
+
+1. corrected bug in africountries Sudan boundary
 
 ## afrilearndata 0.0.0.9002
 
 1. add afrilandcover
-
 
 ## afrilearndata 0.0.0.9001
 
