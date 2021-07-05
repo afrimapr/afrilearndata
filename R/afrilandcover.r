@@ -28,7 +28,8 @@
 #' }
 #'
 #' # interactive plotting with mapview
-#' if (requireNamespace("mapview", quietly = TRUE)) {
+#' if (requireNamespace("mapview", quietly = TRUE) &
+#'     requireNamespace("rgdal", quietly = TRUE)) {
 #'   library(mapview)
 #'   mapview(afrilandcover,
 #'           att="landcover",

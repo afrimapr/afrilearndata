@@ -22,4 +22,5 @@ Imports:
     sf,
     raster
 Suggests:
-    mapview
+    mapview,
+    rgdal
