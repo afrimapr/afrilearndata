@@ -384,9 +384,6 @@ for( year in c(2020,2000))
 usethis::use_data(afripop2000, overwrite = TRUE)
 usethis::use_data(afripop2020, overwrite = TRUE)
 
-#TODO change to afripop2020 and 2000
-#or should I make a raster brick ?
-
 #save raster as a tif file so reading in can be demonstrated
 # write to a new geotiff file (depends on rgdal)
 if (require(rgdal)) {
@@ -396,7 +393,37 @@ if (require(rgdal)) {
         writeRaster(afripop2000, filename=filename, format="GTiff", overwrite=TRUE)
 }
 
+#######################################################################
+# csv of francophone country populations by name
 
+# that can be used to demo joining
+# to plot a map of Francophone countries to promote useR2021 tutorial
+
+library(readr)
+library(dplyr)
+
+francophone_africa <- read_csv("inst/extdata/francophone-africa.csv",
+                               locale = locale(encoding = "ISO-8859-1"))
+
+#join
+sf_franc <- dplyr::left_join(africountries, francophone_africa, "name_long" )
+
+library(ggplot2)
+library(ggrepel)
+
+ggplot(sf_franc) +
+  geom_sf(aes(fill = popn)) +
+  scale_fill_viridis_c() +
+  theme_void() +
+  geom_text_repel(aes(label=name_fr, geometry=geometry),
+                  stat="sf_coordinates",
+                  point.padding = NA, #allows points to overlap centroid
+                  colour='darkgrey', size=3
+  ) +
+  labs(title = "", fill = "Population")
+
+
+#######################################################################
 #starting to look at landcover raster submitted by Chris Littleboy
 #https://github.com/chrislittleboy/publicdata/blob/main/afrimapr%20modis.R
 # > dim(africalowres)
