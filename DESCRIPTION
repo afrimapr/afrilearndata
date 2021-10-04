@@ -22,5 +22,7 @@ Imports:
     sf,
     raster
 Suggests:
+    testthat (>= 3.0.0),
     mapview,
     rgdal
+Config/testthat/edition: 3
