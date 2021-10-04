@@ -3,6 +3,8 @@
 ## afrilearndata 0.0.0.9003
 
 1. corrected bug in africountries Sudan boundary
+1. add francophone Africa example
+1. added unit tests
 
 ## afrilearndata 0.0.0.9002
 
