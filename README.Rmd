@@ -19,7 +19,9 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-afrilearndata provides small African datasets to help with learning and teaching of spatial techniques and mapping.
+afrilearndata provides small African spatial datasets to help with learning and teaching of spatial techniques and mapping.
+
+The motivation is to provide analysts based in Africa with example datasets that they can more easily relate to, rather than needing to use ones from the North.
 
 ## Installation
 
@@ -52,6 +54,7 @@ Lazy loading means that the objects should be accessible once `library(afrilearn
 
 If they are not recognised you can use e.g. `data(africountries)` to make sure the objects are loaded.
 
+As well as providing the data as R objects the package provides them as files that can be used to demonstrate the process of reading spatial data into R and the read code is provided in the documentation of each dataset. The different datasets cover the following formats commonly used to store sptial data : geopackage, shapefile, kml, tiff, csv and grd.    
 
 Firstly, here are most of the data shown together. The `tmap` code to create this plot is shown later in the readme. 
 
@@ -144,6 +147,22 @@ mapview::mapview(africountries, zcol="name")
 mapview(afriairports, zcol='type', label='name', cex=2)
   
 ```
+
+Landcover data for the continent is provided as the majority landcover in 2019 at 20km resolution obtained from [MODIS](https://lpdaac.usgs.gov/products/mcd12c1v006/). An interactive landcover map can be displayed with `mapview`.
+
+```{r interactive-landcover, eval=FALSE}
+
+# install.packages("mapview") # if not already installed
+
+library(mapview)
+
+mapview(afrilandcover,
+       att="landcover",
+       col.regions=levels(afrilandcover)[[1]]$colour)
+  
+```
+
+
 
 Here is a repeat of the map shown at the start of the readme, together with the code used to create it.
 
