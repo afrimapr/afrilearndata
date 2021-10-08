@@ -9,8 +9,9 @@ Authors@R:
            comment = c(ORCID = "0000-0003-4051-6135")),
       person(given = "Chris",
              family = "Littleboy",
-             role = "ctb"))
-Description: Provides small African datasets to help with learning and teaching of spatial techniques and mapping. Part of afrimapr project.
+             role = "ctb",
+             comment = c(ORCID = "0000-0002-3293-7987"))
+Description: Small African datasets to help with learning and teaching of spatial techniques and mapping. Part of afrimapr project.
 License: CC0
 Encoding: UTF-8
 LazyData: true
