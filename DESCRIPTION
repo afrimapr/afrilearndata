@@ -10,8 +10,11 @@ Authors@R:
       person(given = "Chris",
              family = "Littleboy",
              role = "ctb",
-             comment = c(ORCID = "0000-0002-3293-7987"))
-Description: Small African datasets to help with learning and teaching of spatial techniques and mapping. Part of afrimapr project.
+             comment = c(ORCID = "0000-0002-3293-7987")))
+Description: Small African datasets to help with learning and teaching of spatial techniques and mapping. 
+    Part of afrimapr project. To provide analysts based in Africa with more easily relateable example datasets. 
+    R objects for points, lines, polygons and raster. 
+    Source files including .gpkg, .shp, .kml, .tif, .grd, .csv.
 License: CC0
 Encoding: UTF-8
 LazyData: true

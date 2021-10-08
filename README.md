@@ -12,9 +12,11 @@
 afrilearndata provides small African spatial datasets to help with
 learning and teaching of spatial techniques and mapping.
 
-The motivation is to provide analysts based in Africa with example
-datasets that they can more easily relate to, rather than needing to use
-ones from the North.
+The motivation is to provide analysts based in Africa with more easily
+relateable example datasets. More generally we aim to support the growth
+of R and mapping in the continent. Part of the
+[afrimapr](https://afrimapr.github.io/afrimapr.website/) project
+providing R building blocks, training and community.
 
 ## Installation
 
