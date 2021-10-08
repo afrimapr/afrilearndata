@@ -170,7 +170,7 @@ names(dfafricapitals)[1] <- "capitalname"
 names(dfafricapitals)[2] <- "countryname"
 
 #which capitals not included ?
-#africountries$name_long[ -which(africountries$iso_a3 %in% dfafricapitals$iso3c)]
+#africountries$name_long[ -which(africountries$iso_a3 %in% africapitals$iso3c)]
 #[1] "South Sudan" "Somaliland"
 #TODO add capitals for "South Sudan" "Somaliland"
 
@@ -185,13 +185,18 @@ dfss <- data.frame(capitalname="Juba",
 dfafricapitals <- rbind(dfafricapitals, dfss)
 
 #Somaliland should probably be part of Somalia according to international recognition
+#but given it is in africountries I should add the capital too
 #https://geohack.toolforge.org/geohack.php?pagename=Somaliland&params=9_33_N_44_03_E_type:city
-# dfso <- data.frame(capitalname="Hargeysa",
-#                    countryname="Somaliland",
-#                    pop=NA,
-#                    lat=9.55,
-#                    long=44.05,
-#                    iso3c="Somaliland")
+dfso <- data.frame(capitalname="Hargeysa",
+                   countryname="Somaliland",
+                   pop=NA,
+                   lat=9.55,
+                   long=44.05,
+                   iso3c="Somaliland")
+
+dfafricapitals <- rbind(dfafricapitals, dfso)
+
+# mapview(africountries, zcol="name") + mapview(africapitals, label="capitalname")
 
 #?world.cities says pop is approximate population (as at January 2006)
 #I could try to update or find better source
