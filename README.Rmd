@@ -37,15 +37,15 @@ Install the development version of afrilearndata with:
 
 ```
 
-## Outline
+## Datasets
 
 The package contains the following objects 
 
-1. `africountries`    polygons, country boundaries
 1. `africontinent`    polygons, continent outline including madagascar
-1. `afrihighway`         lines, trans african highway network
-1. `africapitals`     points, capital cities
-1. `afriairports`     points, airports
+1. `africountries`    polygons, 51 country boundaries
+1. `afrihighway`         lines, trans African highway network (100 lines)
+1. `africapitals`     points, 50 capital cities
+1. `afriairports`     points, >3000 African airports
 1. `afripop2020`   raster grid, population density 2020 from [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
 1. `afripop2000`   raster grid, population density 2000 from [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
 1. `afrilandcover`   raster grid, landcover in 2019, categorical, 20km from [MODIS](https://lpdaac.usgs.gov/products/mcd12c1v006/) 
@@ -187,6 +187,15 @@ tm_legend(show = FALSE)
 
 ```
 
+## Learning Resources
 
+For learning resources using these data see our [afrilearnr interactive tutorials](https://github.com/afrimapr/afrilearnr), resources in English & French for a [4 hour entry level tutorial](https://github.com/afrimapr/r-maps-tutorial-fr-eng) and the in-progress [afrimapr book](https://github.com/afrimapr/afrimapr-book).
 
+## Related
 
+For other and larger spatial datasets see the [spData package](https://github.com/Nowosad/spData) which was part of the inspiration for afrilearndata.
+
+## Contributions
+
+afrilearndata is part of [afrimapr](https://afrimapr.org) we welcome 
+[issues and enhancement requests](https://github.com/afrimapr/afrilearndata/issues).
