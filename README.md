@@ -36,7 +36,7 @@ The package contains the following objects
 1.  `africontinent` polygons, continent outline including madagascar
 2.  `africountries` polygons, 51 country boundaries
 3.  `afrihighway` lines, trans African highway network (100 lines)
-4.  `africapitals` points, 50 capital cities
+4.  `africapitals` points, 51 capital cities
 5.  `afriairports` points, \>3000 African airports
 6.  `afripop2020` raster grid, population density 2020 from
     [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
@@ -198,6 +198,7 @@ inspiration for afrilearndata.
 
 ## Contributions
 
-afrilearndata is part of [afrimapr](https://afrimapr.org) we welcome
+afrilearndata is part of
+[afrimapr](https://afrimapr.github.io/afrimapr.website/) we welcome
 [issues and enhancement
 requests](https://github.com/afrimapr/afrilearndata/issues).
