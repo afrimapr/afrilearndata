@@ -196,8 +196,6 @@ dfso <- data.frame(capitalname="Hargeysa",
 
 dfafricapitals <- rbind(dfafricapitals, dfso)
 
-# mapview(africountries, zcol="name") + mapview(africapitals, label="capitalname")
-
 #?world.cities says pop is approximate population (as at January 2006)
 #I could try to update or find better source
 
@@ -212,7 +210,7 @@ filename <- r"(inst/extdata/africapitals.gpkg)" #windows safe paths
 sf::write_sf(africapitals, filename)
 
 #mapview::mapview(africapitals, zcol="name")
-
+#mapview(africountries, zcol="name") + mapview(africapitals, label="capitalname")
 
 ############################################################################
 # POINTS CSV airports
@@ -275,50 +273,7 @@ write.csv(dfairports, filename, row.names=FALSE, fileEncoding="UTF-8")
 
 ##########################################################################
 # RASTER
-
-#KoeppenGeiger 2017 half degree from kmz
-filekmz <- r"(C:\Dropbox\_afrimapr\data\koeppen-geiger\Global_1986-2010_KG_30m.kmz)" #windows safe paths
-
-#filename <- r"(C:\Dropbox\_afrimapr\data\koeppen-geiger\Koeppen-Geiger-ASCII.txt)" #windows safe paths
-#filename <- r"(inst/extdata/Koeppen-Geiger-ASCII.txt)" #windows safe paths
-
-library(raster)
-
-rastkg <- raster(filekmz)
-
-#cookie cut to the African continent
-#https://gis.stackexchange.com/questions/92221/extract-raster-from-raster-using-polygon-shapefile-in-r
-cr <- crop(rastkg, extent(africountries), snap="out")
-fr <- rasterize(africountries, cr)
-rastafrikg <- mask(x=cr, mask=fr)
-plot(rastafrikg)
-
-dim(rastafrikg)
-#[1] 434 413   1
-extent(rastafrikg)
-# xmin       : -17.66667
-# xmax       : 51.16667
-# ymin       : -34.83333
-# ymax       : 37.5
-crs(rastafrikg)
-#CRS arguments: +proj=longlat +datum=WGS84 +no_defs
-
-#doesn't really show raster attribute table
-ratify(rastafrikg)
-
-#seems that may just have integer values 1-255 from the kmz
-#there is an alternate way to read in from grd & gri files, but think these may be the higher res version
-
-# ? mapview misses off west of continent
-mapview::mapview(rastafrikg)
-
-
-# maybe try generalising some worldpop data from package wopr instead
-# https://github.com/wpgp/wopr
-
-# devtools::install_github('wpgp/wopr')
-# library(wopr)
-#but that seems to be all individual countries
+# aggregated worldpop data
 
 #download 2020 global 30m (1km) data from here
 #Unconstrained global mosaics
@@ -330,9 +285,6 @@ mapview::mapview(rastafrikg)
 #The dataset is available to download in Geotiff format at a resolution of 30 arc (approximately 1km at the equator).
 
 #include 2 years to allow calculation of pop change
-
-#TODO put code in loop below to be able to do for both 2020 and 2000
-# and cut unused code above
 afripop2000 <- afripop2020 <- NULL
 
 for( year in c(2020,2000))
@@ -374,8 +326,8 @@ for( year in c(2020,2000))
   #mapview(afripop_agg20) #BEST? > mapview happy
   #mapview(afripop_agg50) #highest density cell in lagos in sea
 
-  #TODO why does 20km version cut off parts of W of continent ?
-  # it doesn't when displayed in tmap
+  #why does 20km version cut off parts of W of continent ?
+  #it doesn't when displayed in tmap
 
   #sometimes needed to make sure data are associated with object (rather than being in file)
   afripop_agg20 <- readAll(afripop_agg20)
@@ -429,7 +381,7 @@ ggplot(sf_franc) +
 
 
 #######################################################################
-#starting to look at landcover raster submitted by Chris Littleboy
+#landcover raster submitted by Chris Littleboy
 #https://github.com/chrislittleboy/publicdata/blob/main/afrimapr%20modis.R
 # > dim(africalowres)
 # [1] 2106 2373    1
