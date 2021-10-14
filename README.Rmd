@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# afrilearndata <a href='https://github.com/Shelmith-Kariuki/afrilearndata'><img src='man/figures/hex.png' align="right" height="139" /></a> 
+# afrilearndata <a href='https://github.com/afrimapr/afrilearndata'><img src='man/figures/hex.png' align="right" height="139" /></a> 
 
 
 

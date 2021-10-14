@@ -56,7 +56,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/afrimapr/afrilearndata">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
     
   </a>
@@ -75,7 +75,7 @@
   <div class="contents col-md-9">
 <div id="afrilearndata-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#afrilearndata-" class="anchor"></a>afrilearndata <a href="https://github.com/Shelmith-Kariuki/afrilearndata"><img src="reference/figures/hex.png" align="right" height="139"></a>
+<a href="#afrilearndata-" class="anchor"></a>afrilearndata <a href="https://github.com/afrimapr/afrilearndata"><img src="reference/figures/hex.png" align="right" height="139"></a>
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
@@ -86,7 +86,8 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install the development version of afrilearndata with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R">    <span class="co"># install.packages("remotes") # if not already installed</span>
+<code class="sourceCode R">
+    <span class="co"># install.packages("remotes") # if not already installed</span>
     
     <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"afrimapr/afrilearndata"</span><span class="op">)</span>
     
@@ -122,30 +123,35 @@
 <p><img src="reference/figures/README-tmap-all-the-data-1.png" width="100%"></p>
 <p>Now looking at the data layers individually plotted with packages <code>sf</code> or <code>raster</code></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">afrilearndata</span><span class="op">)</span>
+<code class="sourceCode R">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">afrilearndata</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
 
 <span class="co"># polygons</span>
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_geometry</a></span><span class="op">(</span><span class="va">africountries</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-countries-1.png" width="100%"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># lines</span>
+<code class="sourceCode R">
+<span class="co"># lines</span>
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_geometry</a></span><span class="op">(</span><span class="va">afrihighway</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-highway-1.png" width="100%"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># points</span>
+<code class="sourceCode R">
+<span class="co"># points</span>
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_geometry</a></span><span class="op">(</span><span class="va">africapitals</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-capitals-1.png" width="100%"></p>
 <p>Population density data are from WorldPop clipped to Africa and aggregated to 20km resolution to make them more manageable. <a href="https://www.worldpop.org/">WorldPop</a> datasets are licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># raster grid</span>
+<code class="sourceCode R">
+<span class="co"># raster grid</span>
 <span class="co"># install.packages("raster") # if not already installed</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/raster">raster</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span><span class="op">(</span><span class="va">afripop2020</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-population-grid-1.png" width="100%"></p>
 <p>The <code>africountries</code> data has country names in French, Portuguese, Swahili, Afrikaans and English, that can be used to label maps as follows.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">afrilearndata</span><span class="op">)</span>
+<code class="sourceCode R">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">afrilearndata</span><span class="op">)</span>
 
 <span class="co"># install.packages("tmap") # if not already installed</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mtennekes/tmap">tmap</a></span><span class="op">)</span>
@@ -156,26 +162,29 @@
 <p><img src="reference/figures/README-french-country-names-1.png" width="100%"></p>
 <p>Interactive maps can be created using the <code>mapview</code> package.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("mapview") # if not already installed</span>
+<code class="sourceCode R">
+<span class="co"># install.packages("mapview") # if not already installed</span>
 
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">mapview</span><span class="op">)</span>
-<span class="fu">mapview</span><span class="fu">::</span><span class="fu">mapview</span><span class="op">(</span><span class="va">africountries</span>, zcol<span class="op">=</span><span class="st">"name"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-spatial/mapview">mapview</a></span><span class="op">)</span>
+<span class="fu">mapview</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html">mapview</a></span><span class="op">(</span><span class="va">africountries</span>, zcol<span class="op">=</span><span class="st">"name"</span><span class="op">)</span>
 <span class="co">#here to show all airports on the continent</span>
-<span class="fu">mapview</span><span class="op">(</span><span class="va">afriairports</span>, zcol<span class="op">=</span><span class="st">'type'</span>, label<span class="op">=</span><span class="st">'name'</span>, cex<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html">mapview</a></span><span class="op">(</span><span class="va">afriairports</span>, zcol<span class="op">=</span><span class="st">'type'</span>, label<span class="op">=</span><span class="st">'name'</span>, cex<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
   </code></pre></div>
 <p>Landcover data for the continent is provided as the majority landcover in 2019 at 20km resolution obtained from <a href="https://lpdaac.usgs.gov/products/mcd12c1v006/">MODIS</a>. An interactive landcover map can be displayed with <code>mapview</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("mapview") # if not already installed</span>
+<code class="sourceCode R">
+<span class="co"># install.packages("mapview") # if not already installed</span>
 
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">mapview</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-spatial/mapview">mapview</a></span><span class="op">)</span>
 
-<span class="fu">mapview</span><span class="op">(</span><span class="va">afrilandcover</span>,
+<span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html">mapview</a></span><span class="op">(</span><span class="va">afrilandcover</span>,
        att<span class="op">=</span><span class="st">"landcover"</span>,
        col.regions<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/factor.html">levels</a></span><span class="op">(</span><span class="va">afrilandcover</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">colour</span><span class="op">)</span>
   </code></pre></div>
 <p>Here is a repeat of the map shown at the start of the readme, together with the code used to create it.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">afrilearndata</span><span class="op">)</span>
+<code class="sourceCode R">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">afrilearndata</span><span class="op">)</span>
 
 <span class="co"># install.packages("tmap") # if not already installed</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mtennekes/tmap">tmap</a></span><span class="op">)</span>
