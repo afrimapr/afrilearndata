@@ -1,0 +1,15 @@
+destination: docs
+template:
+  params:
+    bootswatch: yeti
+
+home:
+  title: afrilearndata
+
+navbar:
+  type: reverse
+  title: "afrilearndata"
+  right:
+    - icon: fa-github fa-lg
+      text: ""
+      href: https://github.com/afrimapr/afrilearndata
