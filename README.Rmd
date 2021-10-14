@@ -5,6 +5,7 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- used devtools::build_readme() to update the md -->
 
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -14,7 +15,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-# afrilearndata
+# afrilearndata <a href='https://github.com/Shelmith-Kariuki/afrilearndata'><img src='man/figures/hex.png' align="right" height="139" /></a> 
+
+
 
 <!-- badges: start -->
 <!-- badges: end -->

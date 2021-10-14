@@ -1,12 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- used devtools::build_readme() to update the md -->
 
-# afrilearndata
+# afrilearndata <a href='https://github.com/Shelmith-Kariuki/afrilearndata'><img src='man/figures/hex.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
 afrilearndata provides small African spatial datasets to help with
@@ -23,7 +21,6 @@ providing R building blocks, training and community.
 Install the development version of afrilearndata with:
 
 ``` r
-
     # install.packages("remotes") # if not already installed
     
     remotes::install_github("afrimapr/afrilearndata")
@@ -39,7 +36,7 @@ The package contains the following objects
 2.  `africountries` polygons, 51 country boundaries
 3.  `afrihighway` lines, trans African highway network (100 lines)
 4.  `africapitals` points, 51 capital cities
-5.  `afriairports` points, \>3000 African airports
+5.  `afriairports` points, &gt;3000 African airports
 6.  `afripop2020` raster grid, population density 2020 from
     [WorldPop](https://www.worldpop.org/) aggregated to 20km squares
 7.  `afripop2000` raster grid, population density 2000 from
@@ -69,7 +66,6 @@ Now looking at the data layers individually plotted with packages `sf`
 or `raster`
 
 ``` r
-
 library(afrilearndata)
 library(sf)
 
@@ -80,7 +76,6 @@ plot(sf::st_geometry(africountries))
 <img src="man/figures/README-countries-1.png" width="100%" />
 
 ``` r
-
 # lines
 plot(sf::st_geometry(afrihighway))
 ```
@@ -88,7 +83,6 @@ plot(sf::st_geometry(afrihighway))
 <img src="man/figures/README-highway-1.png" width="100%" />
 
 ``` r
-
 # points
 plot(sf::st_geometry(africapitals))
 ```
@@ -102,7 +96,6 @@ aggregated to 20km resolution to make them more manageable.
 International](https://creativecommons.org/licenses/by/4.0/).
 
 ``` r
-
 # raster grid
 # install.packages("raster") # if not already installed
 library(raster)
@@ -116,7 +109,6 @@ Swahili, Afrikaans and English, that can be used to label maps as
 follows.
 
 ``` r
-
 library(afrilearndata)
 
 # install.packages("tmap") # if not already installed
@@ -132,7 +124,6 @@ tm_shape(africountries) +
 Interactive maps can be created using the `mapview` package.
 
 ``` r
-
 # install.packages("mapview") # if not already installed
 
 library(mapview)
@@ -148,7 +139,6 @@ in 2019 at 20km resolution obtained from
 landcover map can be displayed with `mapview`.
 
 ``` r
-
 # install.packages("mapview") # if not already installed
 
 library(mapview)
@@ -163,7 +153,6 @@ Here is a repeat of the map shown at the start of the readme, together
 with the code used to create it.
 
 ``` r
-
 library(afrilearndata)
 
 # install.packages("tmap") # if not already installed
