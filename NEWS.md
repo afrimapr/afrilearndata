@@ -5,6 +5,7 @@
 1. corrected bug in africountries Sudan boundary
 1. add francophone Africa example
 1. added unit tests
+1. add hex & pkgdown site, thankyou Shel Kariuki !
 
 ## afrilearndata 0.0.0.9002
 
