@@ -192,6 +192,12 @@ tutorials](https://github.com/afrimapr/afrilearnr), resources in English
 tutorial](https://github.com/afrimapr/r-maps-tutorial-fr-eng) and the
 in-progress [afrimapr book](https://github.com/afrimapr/afrimapr-book).
 
+## How were the datasets created ?
+
+Here is the [code (somewhat
+untidy)](https://github.com/afrimapr/afrilearndata/blob/master/data-raw/afrilearndata-data-creation.R)
+to create the datasets in the package.
+
 ## Related
 
 For other and larger spatial datasets see the [spData

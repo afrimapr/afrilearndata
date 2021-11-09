@@ -484,13 +484,18 @@ tm_shape(afrilandcover) + tm_raster("landcover")
 #fails w or w/out quotes
 #tm_shape(afrilandcover) + tm_raster("landcover", palette="colour")
 tm_shape(afrilandcover) + tm_raster("landcover", palette=levels(afrilandcover)[[1]]$colour)
+#can't quite get it to display both the colours & the labels
+tm_shape(afrilandcover) + tm_raster("landcover", style="cat",palette=levels(afrilandcover)[[1]]$colour, labels=levels(afrilandcover)[[1]]$landcover)
 
-#now I see that tmap has a global landcover as a stars object
-#but doesn't have the colour palette saved in the object
-# data(land)
-# pal8 <- c("#33A02C", "#B2DF8A", "#FDBF6F", "#1F78B4", "#999999", "#E31A1C", "#E6E6E6", "#A6CEE3")
-# tm_shape(land, ylim = c(-88,88)) +
-#   tm_raster("cover_cls", palette = pal8, title = "Global Land Cover")
+# maybe I should try stars for afrilandcover instead ?
+# can I get a stars object to save the rastr attribute table with th colours ?
+# or terra ?
+# terra can save raster attribute tables incl. colour palette as indicated here :
+# https://geocompr.robinlovelace.net/attr.html
+
+library(terra)
+afrilandcoverterra <- terra::rast(filename)
+
 
 # write file to package, as grd file to preserve raster attribute table
 filename <- r"(inst/extdata/afrilandcover.grd)" #windows safe paths
@@ -506,25 +511,57 @@ filename <- system.file("extdata","afrilandcover.grd", package="afrilearndata", 
 testlc <- raster::raster(filename)
 mapview(testlc, att="landcover", col.regions=levels(testlc)[[1]]$colour)
 
+
+#now I see that tmap has a global landcover as a stars object
+#but doesn't have the colour palette saved in the object
+data(land)
+pal8 <- c("#33A02C", "#B2DF8A", "#FDBF6F", "#1F78B4", "#999999", "#E31A1C", "#E6E6E6", "#A6CEE3")
+tm_shape(land, ylim = c(-88,88)) +
+  tm_raster("cover_cls", palette = pal8, title = "Global Land Cover")
+
 # test reading in as a stars object
 
 #proxy=FALSE ensures data are loaded but probably not necessary for this small grid
 afrilandstars <- stars::read_stars(filename, proxy=FALSE)
 
+# it gives Warning message: ignoring unrecognized unit: class number
+# which is from here in stars :
+# https://github.com/r-spatial/stars/blob/ed1e36ff9ea317fd9d9c2fc9d360c06cb7258555/R/dimensions.R
+
+#using RAT should get it to create a categorical stars object but not working ??
+afrilandstars <- stars::read_stars(filename, proxy=FALSE, RAT=rownames(igbp)[rat$ID+1])
+
+#TODO can I get stars to store & plot the colours ?
+# nearly working but not quite ...
+
+#seems from here that a colour attribute can be set
+#https://github.com/r-spatial/stars/issues/392#issuecomment-788812130
+#attr(r$f, "colors") = c("#b41614", "#3cfa96")
+afrilandstars$landcover <- rownames(igbp)[rat$ID+1]
+attr(afrilandstars$landcover, "colors") = igbp$IGBP[rat$ID+1]
+
 #stars plots the categories well, but does not seem to retain the colours ?
-#and the labels get trun
+#and the labels get truncated
 plot(afrilandstars)
 #mapview likewise
 mapview(afrilandstars)
 
-#TODO can I get stars to store & plot the colours ?
+#or just try converting the raster object
+afrilandstars2 <- st_as_stars(afrilandcover)
 
-#seems from here that a colour attribute can be set
-#https://github.com/r-spatial/stars/issues/392#issuecomment-788812130
-attr(r$f, "colors") = c("#b41614", "#3cfa96")
+tm_shape(afrilandstars2) + tm_raster("landcover")
+
+tm_shape(afrilandstars2) + tm_raster("landcover", style="cat",palette=levels(afrilandcover)[[1]]$colour, labels=levels(afrilandcover)[[1]]$landcover)
+
 
 #but how can it be read from the grd file ?
 #or maybe I should save as a tiff like above too ?
+
+
+# TODO I think stars is way to go - like in tmap
+# but just need to work out how to get it to create the categorical raster
+# how does tmap create land ?
+# https://github.com/r-tmap/tmap/blob/bab938b2bffb040638b635ffd99e7bce8143e7f3/build/create_land.R
 
 
 
